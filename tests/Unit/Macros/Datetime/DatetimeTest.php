@@ -1,0 +1,39 @@
+<?php
+
+namespace Tests\Stringer\Unit\Macros\Datetime;
+
+use Carbon\Carbon;
+use PHPUnit\Framework\Attributes\Test;
+use Stringer\Macros\Bool\Is;
+use Stringer\Macros\Datetime\Datetime;
+use Stringer\Stringable;
+use Stringer\Stringer;
+use Tests\Stringer\Unit\TestCase;
+
+class DatetimeTest extends TestCase
+{
+    #[Test]
+    public function 日時文字列からパース・フォーマットする(): void
+    {
+        $instance = new Datetime();
+        $stringable = $this->createMock(Stringable::class);
+        $stringable
+            ->method('__call')
+            ->willReturnCallback(fn(string $name, array $arguments) => '2021-01-01 12:00:00');
+        $this->assertSame('2021-01-01', $instance($stringable, 'Y-m-d')->toString());
+    }
+
+    #[Test]
+    public function 日時文字列でない場合は例外を投げる(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $instance = new Datetime();
+        $stringable = $this->createMock(Stringable::class);
+        $stringable
+            ->method('__call')
+            ->willReturnCallback(fn(string $name, array $arguments) => 'abcde');
+
+        $instance($stringable, 'Y-m-d');
+    }
+}
