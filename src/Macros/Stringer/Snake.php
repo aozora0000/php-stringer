@@ -16,8 +16,8 @@ class Snake implements StringerCallable
                 $stringable :
                 $stringable
                     ->ucwords()
-                    ->pReplace('/\s+/u', '')
-                    ->pReplace('/(.)(?=[A-Z])/u', '$1'.($arguments[0] ?? '_'))
+                    ->replace('/\s+/u', '')
+                    ->replace('/(.)(?=[A-Z])/u', '$1'.($arguments[0] ?? '_'))
                     ->lower()
         );
     }

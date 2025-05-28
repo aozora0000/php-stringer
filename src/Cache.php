@@ -8,12 +8,15 @@ trait Cache
 
     public function when(Stringer $stringable, array $arguments, callable $callback): mixed
     {
-        $key = $this->key($stringable, $arguments);
-        if ($this->exists($key)) {
-            return $this->get($key);
+        return $this->whenKey($this->key($stringable, $arguments), $callback);
+    }
+
+    public function whenKey(string $name, callable $callback): mixed
+    {
+        if ($this->exists($name)) {
+            return $this->get($name);
         }
-        $this->set($key, $callback());
-        return $this->set($key, $callback());
+        return $this->set($name, $callback());
     }
 
     public function key(Stringer $stringable, ...$arguments): string

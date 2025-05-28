@@ -29,11 +29,7 @@ class ReplaceTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments) {
-                return match($name) {
-                    'toString' => 'test',
-                };
-            });
+            ->willReturnCallback(fn () => 'test');
         $this->assertSame('aesa', $instance($stringable, 't', 'a')->toString());
     }
 
