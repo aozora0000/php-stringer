@@ -12,6 +12,6 @@ class Wrap implements StringerCallable
     {
         $prefix = $arguments[0] ?? '';
         $postfix = $arguments[1] ?? $prefix;
-        return new Stringer(implode([$prefix, $stringable->toString(), $postfix]));
+        return new Stringer(implode('', [$prefix, $stringable->toString(), $postfix]));
     }
 }

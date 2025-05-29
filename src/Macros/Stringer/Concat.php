@@ -11,6 +11,6 @@ class Concat implements StringerCallable
     public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         $arguments = array_filter($arguments);
-        return new Stringer(implode([$stringable->toString(), ...$arguments]));
+        return new Stringer(implode('', [$stringable->toString(), ...$arguments]));
     }
 }

@@ -20,13 +20,13 @@ class ToDoubleTest extends TestCase
         
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(function(string $method, array $args) {
+            ->willReturnCallback(function(string $method, array $args): Stringable|string|int|float|bool|array {
                 return match($method) {
                     'isNumeric' => true,
                     'toString' => '123.456',
                 };
             });
-        $this->assertEquals(123.46, $instance($stringable, 2));
+        $this->assertEqualsWithDelta(123.46, $instance($stringable, 2), PHP_FLOAT_EPSILON);
     }
 
     /**
@@ -39,13 +39,13 @@ class ToDoubleTest extends TestCase
         
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(function(string $method, array $args) {
+            ->willReturnCallback(function(string $method, array $args): Stringable|string|int|float|bool|array {
                 return match($method) {
                     'isNumeric' => true,
                     'toString' => '123.456',
                 };
             });
-        $this->assertEquals(123.456, $instance($stringable));
+        $this->assertEqualsWithDelta(123.456, $instance($stringable), PHP_FLOAT_EPSILON);
     }
 
     /**
@@ -58,7 +58,7 @@ class ToDoubleTest extends TestCase
         
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(function(string $method, array $args) {
+            ->willReturnCallback(function(string $method, array $args): Stringable|string|int|float|bool|array {
                 return match($method) {
                     'isNumeric' => false,
                     'toString' => 'not-a-number',

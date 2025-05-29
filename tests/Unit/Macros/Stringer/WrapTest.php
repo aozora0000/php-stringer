@@ -15,7 +15,7 @@ class WrapTest extends TestCase
         $instance = new Wrap();
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn() => 'test');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'test');
 
         $actual =  $instance($stringable, '<<', '>>')->toString();
         $this->assertEquals('<<test>>', $actual);;
@@ -27,7 +27,7 @@ class WrapTest extends TestCase
         $instance = new Wrap();
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn() => 'test');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'test');
 
         $actual = $instance($stringable, '<<')->toString();
         $this->assertEquals('<<test<<', $actual);
@@ -39,7 +39,7 @@ class WrapTest extends TestCase
         $instance = new Wrap();
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn() => 'test');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'test');
 
 
         $actual = $instance($stringable)->toString();

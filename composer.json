@@ -19,7 +19,8 @@
     ],
     "scripts": {
         "test": "phpunit",
-        "rector": "rector --dry-run"
+        "rector:dry": "rector --dry-run",
+        "rector:run": "rector"
     },
     "require": {
         "php": "^8.1",

@@ -9,8 +9,6 @@ use Stringer\StringerCallable;
 class Split implements StringerCallable
 {
     /**
-     * @param Stringable $stringable
-     * @param string ...$arguments
      * @return Stringer[]
      */
     public function __invoke(Stringable $stringable, string ...$arguments): array
@@ -19,6 +17,6 @@ class Split implements StringerCallable
         $words = $sep->isRegexPattern() ?
             preg_split($sep->toString(), $stringable->toString(), -1, PREG_SPLIT_DELIM_CAPTURE) : explode($sep->toString(), $stringable->toString());
 
-        return array_filter(array_map(fn($word) => $word === '' ? null : new Stringer($word), $words));
+        return array_filter(array_map(fn($word): ?Stringer => $word === '' ? null : new Stringer($word), $words));
     }
 }

@@ -14,10 +14,10 @@ use Stringer\Stringer;
 class ConcatTest extends TestCase
 {
     #[Test]
-    public function 空配列の場合の戻り値()
+    public function 空配列の場合の戻り値(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () => 'abc');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'abc');
 
         $instance = new Concat();
         $actual = $instance($stringable);
@@ -27,10 +27,10 @@ class ConcatTest extends TestCase
     }
 
     #[Test]
-    public function 引数を連結することを確認()
+    public function 引数を連結することを確認(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () => 'foo');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'foo');
 
         $instance = new Concat();
         $actual = $instance($stringable, 'bar', 'baz');
@@ -39,10 +39,10 @@ class ConcatTest extends TestCase
     }
 
     #[Test]
-    public function 空文字列は連結されないこと()
+    public function 空文字列は連結されないこと(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () => 'xxx');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'xxx');
 
         $instance = new Concat();
         $actual = $instance($stringable, '', 'yyy');

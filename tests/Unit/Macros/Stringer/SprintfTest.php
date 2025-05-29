@@ -18,7 +18,7 @@ class SprintfTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments) {
+            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
                 return match($name) {
                     'toString' => 'World',
                 };
@@ -33,7 +33,7 @@ class SprintfTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments) {
+            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
                 return match($name) {
                     'toString' => 'World',
                 };

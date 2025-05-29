@@ -18,7 +18,7 @@ class ToStringTest extends TestCase
         $instance = new ToString();
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__toString')
-            ->willReturnCallback(fn () => 'テスト文字列');
+            ->willReturnCallback(fn (): string => 'テスト文字列');
 
         $this->assertSame('テスト文字列', $instance($stringable));
     }

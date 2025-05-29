@@ -42,6 +42,7 @@ trait Helper
             [$class, $method] = explode($sep, $argument);
             return class_exists($class) && method_exists($class, $method);
         }
+
         return false;
     }
 }

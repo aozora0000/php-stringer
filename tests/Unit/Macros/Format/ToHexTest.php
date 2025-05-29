@@ -22,7 +22,7 @@ class ToHexTest extends TestCase
         // Stringableのモックを作成
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(function (string $method, array $args) {
+            ->willReturnCallback(function (string $method, array $args): Stringable|string|int|float|bool|array {
                 return match ($method) {
                     'isInteger' => true,
                     'toString' => '255',
@@ -46,7 +46,7 @@ class ToHexTest extends TestCase
         // Stringableのモックを作成
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(function (string $method, array $args) {
+            ->willReturnCallback(function (string $method, array $args): Stringable|string|int|float|bool|array {
                 return match ($method) {
                     'isInteger' => false,
                     default => null,

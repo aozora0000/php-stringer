@@ -13,7 +13,7 @@ use Stringer\Stringer;
 class BasenameTest extends TestCase
 {
     #[Test]
-    public function 空文字列の場合例外が発生する()
+    public function 空文字列の場合例外が発生する(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Basename();
@@ -32,7 +32,7 @@ class BasenameTest extends TestCase
 
 
     #[Test]
-    public function ファイルパスからファイル名のみが取得できる()
+    public function ファイルパスからファイル名のみが取得できる(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Basename();
@@ -51,7 +51,7 @@ class BasenameTest extends TestCase
     }
     
     #[Test]
-    public function ディレクトリパスからディレクトリ名が取得できる()
+    public function ディレクトリパスからディレクトリ名が取得できる(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Basename();
@@ -70,7 +70,7 @@ class BasenameTest extends TestCase
     }
     
     #[Test]
-    public function 拡張子なしのファイル名が取得できる()
+    public function 拡張子なしのファイル名が取得できる(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Basename();
@@ -89,7 +89,7 @@ class BasenameTest extends TestCase
     }
     
     #[Test]
-    public function ルートディレクトリの場合は空文字が取得できる()
+    public function ルートディレクトリの場合は空文字が取得できる(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Basename();
@@ -108,7 +108,7 @@ class BasenameTest extends TestCase
     }
     
     #[Test]
-    public function 複数のスラッシュを含むパスでも正しく動作する()
+    public function 複数のスラッシュを含むパスでも正しく動作する(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Basename();
@@ -128,7 +128,7 @@ class BasenameTest extends TestCase
 
     
     #[Test]
-    public function Windowsスタイルのパスでも正しく動作する()
+    public function Windowsスタイルのパスでも正しく動作する(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Basename();
@@ -147,7 +147,7 @@ class BasenameTest extends TestCase
     }
 
     #[Test]
-    public function URLからファイル名が取得できる()
+    public function URLからファイル名が取得できる(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Basename();

@@ -16,6 +16,7 @@ class Limit implements StringerCallable
         if(mb_strwidth($stringable->toString()) <= $limit) {
             return $stringable;
         }
+
         return new Stringer(rtrim(mb_strimwidth($stringable->toString(), 0, $limit, '', 'UTF-8')) . $end);
     }
 }

@@ -21,7 +21,7 @@ class PositionTest extends TestCase
         // Stringableインターフェースのモックを作成
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn() => 'テスト文字列');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'テスト文字列');
 
         $actual = $position($stringable, '文字');
         $this->assertSame(3, $actual);
@@ -37,7 +37,7 @@ class PositionTest extends TestCase
         
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn() => 'あいうえおあいうえお');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'あいうえおあいうえお');
 
         $actual = $position($stringable, 'あ', 3);
         $this->assertSame(5, $actual);
@@ -53,7 +53,7 @@ class PositionTest extends TestCase
         
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn() => 'テスト文字列');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'テスト文字列');
 
         $actual = $position($stringable, 'xyz');
         $this->assertFalse($actual);
@@ -69,7 +69,7 @@ class PositionTest extends TestCase
         
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn() => 'テスト');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'テスト');
 
         $actual = $position($stringable);
         $this->assertSame(0, $actual);

@@ -16,6 +16,7 @@ trait Cache
         if ($this->exists($name)) {
             return $this->get($name);
         }
+
         return $this->set($name, $callback());
     }
 

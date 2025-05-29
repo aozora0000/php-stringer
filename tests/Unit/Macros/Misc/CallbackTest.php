@@ -49,7 +49,7 @@ class CallbackTest extends TestCase
         $actual = $instance($stringable, $callback);
 
         // 結果の文字列が期待値と一致することを確認
-        $this->assertEquals('HELLO', (string)$actual);
+        $this->assertSame('HELLO', (string)$actual);
     }
 
     #[Test]
@@ -126,15 +126,15 @@ class CallbackTest extends TestCase
         $stringable = new Stringer('world');
 
         // クロージャーを定義
-        $callback = function ($value) {
-            return 'Hello, ' . (string)$value . '!';
+        $callback = function (string $value): string {
+            return 'Hello, ' . $value . '!';
         };
 
         // テスト実行
         $actual = $instance($stringable, $callback);
 
         // 結果が期待値と一致することを確認
-        $this->assertEquals('Hello, world!', (string)$actual);
+        $this->assertSame('Hello, world!', (string)$actual);
     }
 
     #[Test]
@@ -150,6 +150,6 @@ class CallbackTest extends TestCase
         $actual = $instance($stringable, 'strlen');
 
         // 結果が期待値と一致することを確認（文字列長が返される）
-        $this->assertEquals('11', (string)$actual);
+        $this->assertSame('11', (string)$actual);
     }
 }

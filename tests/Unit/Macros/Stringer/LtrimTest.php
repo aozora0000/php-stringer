@@ -16,11 +16,11 @@ class LtrimTest extends TestCase
      * 引数で指定した文字だけを左側からトリムすることを確認する
      */
     #[Test]
-    public function 左側の特定の文字のみ除去されること()
+    public function 左側の特定の文字のみ除去されること(): void
     {
         // StringableをモックしてtoStringで値を返すようにする
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn($method, $args) => 'xxABCxx');
+        $stringable->method('__call')->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => 'xxABCxx');
 
         $instance = new Ltrim();
         $actual = $instance($stringable, 'x');
@@ -33,11 +33,11 @@ class LtrimTest extends TestCase
      * 引数によるトリム指定がない場合、標準的な空白と制御文字が除去されること
      */
     #[Test]
-    public function デフォルトで空白や制御文字が除去されること()
+    public function デフォルトで空白や制御文字が除去されること(): void
     {
         // StringableをモックしてtoStringで値を返すようにする
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn($method, $args) => "\t\r\nABC ");
+        $stringable->method('__call')->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => "\t\r\nABC ");
 
         $instance = new Ltrim();
         $actual = $instance($stringable);
@@ -50,10 +50,10 @@ class LtrimTest extends TestCase
      * 引数の配列で複数文字を指定したとき、一番最初の指定だけが使われること
      */
     #[Test]
-    public function 複数引数指定で先頭のみ利用されること()
+    public function 複数引数指定で先頭のみ利用されること(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn($method, $args) => 'aabbcc');
+        $stringable->method('__call')->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => 'aabbcc');
 
         $instance = new Ltrim();
         $actual = $instance($stringable, 'a', 'b');

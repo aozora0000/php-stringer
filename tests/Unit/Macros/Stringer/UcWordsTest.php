@@ -15,7 +15,7 @@ class UcWordsTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () =>'hello world');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello world');
         $instance = new UcWords();
 
         // 実行
@@ -30,7 +30,7 @@ class UcWordsTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () =>'');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'');
         $instance = new UcWords();
 
         // 実行
@@ -45,7 +45,7 @@ class UcWordsTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () =>'hello');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello');
         $instance = new UcWords();
 
         // 実行
@@ -60,7 +60,7 @@ class UcWordsTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () =>'hello  world  test');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello  world  test');
         $instance = new UcWords();
 
         // 実行
@@ -75,7 +75,7 @@ class UcWordsTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () =>'hello123 world456');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello123 world456');
         $instance = new UcWords();
 
         // 実行
@@ -90,7 +90,7 @@ class UcWordsTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () =>'test');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'test');
         $instance = new UcWords();
 
         // 実行
@@ -105,7 +105,7 @@ class UcWordsTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () =>'hello world');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello world');
         $instance = new UcWords();
 
         // 実行

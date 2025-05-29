@@ -14,33 +14,33 @@ class KebabTest extends TestCase
     public static function dataProvider(): \Iterator
     {
         yield [
-            'expected' => 'hello-world',
-            'actual' => 'helloWorld',
+            'hello-world',
+            'helloWorld',
         ];
 
         yield [
-            'expected' => 'foo-bar',
-            'actual' => 'foo_bar',
+            'foo-bar',
+            'foo_bar',
         ];
 
         yield [
-            'expected' => 'foo-bar-baz',
-            'actual' => 'foo bar baz',
+            'foo-bar-baz',
+            'foo bar baz',
         ];
 
         yield [
-            'expected' => 'foo-bar-baz',
-            'actual' => 'Foo Bar Baz',
+            'foo-bar-baz',
+            'Foo Bar Baz',
         ];
 
         yield [
-            'expected' => 'foo-bar',
-            'actual' => 'FooBar',
+            'foo-bar',
+            'FooBar',
         ];
 
         yield [
-            'expected' => 'hello-world',
-            'actual' => 'hello_world',
+            'hello-world',
+            'hello_world',
         ];
     }
 

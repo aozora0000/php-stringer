@@ -252,6 +252,7 @@ class Stringer implements Stringable, JsonSerializable
         if(preg_match('~[^\x20-\x7E\t\r\n]~', (string)$string) > 0) {
             $string = mb_convert_encoding($string, 'UTF-8');
         }
+
         $this->string = preg_replace('/[\x{200B}-\x{200D}]/u', '', is_string($string) ? $string : $string->toString());
     }
 
@@ -310,10 +311,6 @@ class Stringer implements Stringable, JsonSerializable
         };
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
     public static function has(string $name): bool
     {
         return array_key_exists($name, self::$macros);
@@ -334,6 +331,7 @@ class Stringer implements Stringable, JsonSerializable
         if ($class->getMethod($method)->isStatic()) {
             return $class::$method($this, $arguments);
         }
+
         return $class->newInstance()->$method($this, $arguments);
     }
 

@@ -15,11 +15,11 @@ class LimitTest extends TestCase
 {
     #[Test]
     /** 文字列が制限以内の時、元のStringableが返ること */
-    public function 文字列幅が制限以内の場合に元のインスタンスを返すこと()
+    public function 文字列幅が制限以内の場合に元のインスタンスを返すこと(): void
     {
         $stringValue = '短い文字列';
         $mockStringable = $this->createMock(Stringable::class);
-        $mockStringable->method('__call')->willReturnCallback(fn() => $stringValue);
+        $mockStringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => $stringValue);
 
         $limit = new Limit();
         $actual = $limit($mockStringable, 20);
@@ -29,11 +29,11 @@ class LimitTest extends TestCase
 
     #[Test]
     /** 文字列が制限を超えた時、切り詰めてStringerで返すこと */
-    public function 文字列幅が制限を超えた場合に切り詰めて返すこと()
+    public function 文字列幅が制限を超えた場合に切り詰めて返すこと(): void
     {
         $stringValue = 'これはとても長いテキストサンプルです';
         $mockStringable = $this->createMock(Stringable::class);
-        $mockStringable->method('__call')->willReturnCallback(fn() => $stringValue);
+        $mockStringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => $stringValue);
 
         $limit = new Limit();
         $actual = $limit($mockStringable, 10);
@@ -43,11 +43,11 @@ class LimitTest extends TestCase
 
     #[Test]
     /** 文字列が制限を超えた時、末尾にデフォルト("...")が付与されること */
-    public function 文字列幅オーバー時にデフォルトの末尾がつくこと()
+    public function 文字列幅オーバー時にデフォルトの末尾がつくこと(): void
     {
         $stringValue = 'これはとても長いテキストサンプルです';
         $mockStringable = $this->createMock(Stringable::class);
-        $mockStringable->method('__call')->willReturnCallback(fn() => $stringValue);
+        $mockStringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => $stringValue);
 
         $limit = new Limit();
         /** @var Stringer $actual */
@@ -58,11 +58,11 @@ class LimitTest extends TestCase
 
     #[Test]
     /** 第二引数で末尾を指定した場合に、その文字列が末尾につくこと */
-    public function 末尾を指定した時指定文字が末尾につくこと()
+    public function 末尾を指定した時指定文字が末尾につくこと(): void
     {
         $stringValue = 'これはとても長いテキストサンプルです';
         $mockStringable = $this->createMock(Stringable::class);
-        $mockStringable->method('__call')->willReturnCallback(fn() => $stringValue);
+        $mockStringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => $stringValue);
 
         $limit = new Limit();
         /** @var Stringer $actual */

@@ -18,7 +18,7 @@ class OffsetTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments) {
+            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
                 return match($name) {
                     'isEmpty' => true,
                     'length' => 0,
@@ -35,7 +35,7 @@ class OffsetTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments) {
+            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
                 return match($name) {
                     'isEmpty' => false,
                     'length' => 5,
@@ -53,7 +53,7 @@ class OffsetTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments) {
+            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
                 return match($name) {
                     'isEmpty' => false,
                     'length' => 5,

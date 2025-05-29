@@ -69,10 +69,10 @@ class PluralStudlyTest extends TestCase
         // 準備
         $string = new Stringer('Books');
         $pluralStudly = new PluralStudly();
-        
+
         // 実行
         $result = $pluralStudly($string);
-        
+
         // 検証
         $this->assertSame('Books', $result->toString()); // 複数形のルールに依存
     }

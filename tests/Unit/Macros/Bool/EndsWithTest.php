@@ -16,10 +16,10 @@ class EndsWithTest extends TestCase
      * 文字列が空文字のときに false を返すことを確認する
      */
     #[Test]
-    public function 空文字列の場合はfalseになる()
+    public function 空文字列の場合はfalseになる(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => '');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => '');
         $instance = new EndsWith();
         $actual = $instance($stringable, 'abc');
         $this->assertFalse($actual);
@@ -29,10 +29,10 @@ class EndsWithTest extends TestCase
      * 引数の配列が空のときに false を返すことを確認する
      */
     #[Test]
-    public function 終了文字列引数が空の場合はfalseになる()
+    public function 終了文字列引数が空の場合はfalseになる(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => 'abc');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'abc');
         $instance = new EndsWith();
         $actual = $instance($stringable);
         $this->assertFalse($actual);
@@ -42,10 +42,10 @@ class EndsWithTest extends TestCase
      * 1つだけ渡した終了文字列に一致すれば true を返すことを確認する
      */
     #[Test]
-    public function １つの終了文字に一致すればtrueになる()
+    public function １つの終了文字に一致すればtrueになる(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => 'foobar');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foobar');
         $instance = new EndsWith();
         $actual = $instance($stringable, 'bar');
         $this->assertTrue($actual);
@@ -55,10 +55,10 @@ class EndsWithTest extends TestCase
      * 1つだけ渡した終了文字列に一致しない場合 false を返すことを確認する
      */
     #[Test]
-    public function １つの終了文字に一致しなければfalseになる()
+    public function １つの終了文字に一致しなければfalseになる(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => 'foobar');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foobar');
         $instance = new EndsWith();
         $actual = $instance($stringable, 'baz');
         $this->assertFalse($actual);
@@ -68,10 +68,10 @@ class EndsWithTest extends TestCase
      * 複数渡した終了文字列のいずれかに一致すれば true を返すことを確認する
      */
     #[Test]
-    public function 複数の終了文字のいずれかに一致すればtrueになる()
+    public function 複数の終了文字のいずれかに一致すればtrueになる(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => 'foobar');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foobar');
         $instance = new EndsWith();
 
         $actual = $instance($stringable, 'baz', 'bar', 'hoge');
@@ -82,10 +82,10 @@ class EndsWithTest extends TestCase
      * 複数渡した終了文字列のどれにも一致しない場合 false を返すことを確認する
      */
     #[Test]
-    public function 複数の終了文字にどれも一致しなければfalseになる()
+    public function 複数の終了文字にどれも一致しなければfalseになる(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => 'foobar');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foobar');
         $instance = new EndsWith();
 
         $actual = $instance($stringable, 'abc', 'xyz', 'hoge');

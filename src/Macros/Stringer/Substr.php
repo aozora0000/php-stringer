@@ -9,7 +9,6 @@ use Stringer\StringerCallable;
 class Substr implements StringerCallable
 {
     /**
-     * @param Stringable $stringable
      * @param int ...$arguments
      * @return Stringer
      */

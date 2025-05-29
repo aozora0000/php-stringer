@@ -13,10 +13,10 @@ class FinishTest extends TestCase
      * 文字列の末尾から指定した文字列が削除され、その後1つだけ付加されることを検証する
      */
     #[Test]
-    public function 末尾の文字列が1つでも複数でもキャップ文字列で終わる場合に末尾が1つだけ残る()
+    public function 末尾の文字列が1つでも複数でもキャップ文字列で終わる場合に末尾が1つだけ残る(): void
     {
         $mock = $this->createMock(Stringable::class);
-        $mock->method('__call')->willReturnCallback(fn () => 'foobarbar');
+        $mock->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'foobarbar');
 
         $instance = new Finish();
         $actual = $instance($mock, 'bar');
@@ -28,10 +28,10 @@ class FinishTest extends TestCase
      * 末尾にキャップ文字列が存在しない場合でも1つだけ追加されることを検証する
      */
     #[Test]
-    public function 末尾にキャップ文字列が存在しない場合にキャップが追加される()
+    public function 末尾にキャップ文字列が存在しない場合にキャップが追加される(): void
     {
         $mock = $this->createMock(Stringable::class);
-        $mock->method('__call')->willReturnCallback(fn() => 'foo');
+        $mock->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foo');
 
         $instance = new Finish();
         $actual = $instance($mock, 'bar');
@@ -42,10 +42,10 @@ class FinishTest extends TestCase
      * キャップ文字列が空の場合、元の文字列がそのまま返ることを検証する
      */
     #[Test]
-    public function キャップ文字列が空の場合は元の文字列を返す()
+    public function キャップ文字列が空の場合は元の文字列を返す(): void
     {
         $mock = $this->createMock(Stringable::class);
-        $mock->method('__call')->willReturnCallback(fn() => 'foo');
+        $mock->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foo');
 
         $instance = new Finish();
         $actual = $instance($mock, '');

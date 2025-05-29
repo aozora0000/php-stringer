@@ -14,6 +14,7 @@ class Callback implements StringerCallable
         if(($arguments[0] ?? false) && is_callable($arguments[0])) {
             return new Stringer($arguments[0]($stringable));
         }
+
         return $stringable;
     }
 }

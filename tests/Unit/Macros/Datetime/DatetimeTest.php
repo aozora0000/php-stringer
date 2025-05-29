@@ -19,7 +19,7 @@ class DatetimeTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => '2021-01-01 12:00:00');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '2021-01-01 12:00:00');
         $this->assertSame('2021-01-01', $instance($stringable, 'Y-m-d', 'Asia/Tokyo')->toString());
     }
 
@@ -32,7 +32,7 @@ class DatetimeTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => 'abcde');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => 'abcde');
 
         $instance($stringable, 'Y-m-d');
     }
@@ -44,7 +44,7 @@ class DatetimeTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => '2021-01-01 12:00:00');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '2021-01-01 12:00:00');
         $this->assertSame('2021-01-01 12:00:00', $instance($stringable, 'Y-m-d H:i:s', 'UTC')->toString());
     }
 
@@ -55,7 +55,7 @@ class DatetimeTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => '2021-01-01 12:00:00');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '2021-01-01 12:00:00');
         $this->assertSame('2021-01-01 04:00:00', $instance($stringable, 'Y-m-d H:i:s', 'America/Los_Angeles')->toString());
     }
 

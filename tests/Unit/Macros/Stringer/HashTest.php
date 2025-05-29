@@ -19,7 +19,7 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable);
         
-        $this->assertEquals(hash('sha1', 'test'), (string)$actual);
+        $this->assertSame(hash('sha1', 'test'), (string)$actual);
     }
 
     #[Test]
@@ -30,7 +30,7 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable, 'md5');
 
-        $this->assertEquals(md5('test'), (string)$actual);
+        $this->assertSame(md5('test'), (string)$actual);
     }
 
     #[Test]
@@ -40,7 +40,7 @@ class HashTest extends TestCase
         $instance = new Hash();
         
         $actual = $instance($stringable, 'sha256');
-        $this->assertEquals(hash('sha256', 'test'), (string)$actual);
+        $this->assertSame(hash('sha256', 'test'), (string)$actual);
     }
 
     #[Test]
@@ -51,7 +51,7 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable, 'md5');
         
-        $this->assertEquals(md5('test'), (string)$actual);
+        $this->assertSame(md5('test'), (string)$actual);
     }
 
     #[Test]
@@ -62,7 +62,7 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable, 'sha1');
         
-        $this->assertEquals(sha1('test'), (string)$actual);
+        $this->assertSame(sha1('test'), (string)$actual);
     }
 
     #[Test]
@@ -71,7 +71,7 @@ class HashTest extends TestCase
         $stringable = new Stringer('test');
         
         // 呼び出し可能オブジェクトを作成
-        $callable = function($str) { 
+        $callable = function(string $str): string { 
             return 'custom_hash_' . $str; 
         };
 
@@ -79,7 +79,7 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable, $callable);
         
-        $this->assertEquals('custom_hash_test', (string)$actual);
+        $this->assertSame('custom_hash_test', (string)$actual);
     }
 
     #[Test]
@@ -117,7 +117,7 @@ class HashTest extends TestCase
         // テスト実行（引数なし）
         $actual = $instance($stringable);
         
-        $this->assertEquals(hash('sha1', 'hello'), (string)$actual);
+        $this->assertSame(hash('sha1', 'hello'), (string)$actual);
     }
 
     #[Test]
@@ -126,7 +126,7 @@ class HashTest extends TestCase
         $stringable = new Stringer('test');
 
         // 複数の引数を受け取るカスタム関数
-        $callable = function($str, $prefix, $suffix) { 
+        $callable = function($str, string $prefix, string $suffix): string { 
             return $prefix . hash('md5', $str) . $suffix; 
         };
 
@@ -134,7 +134,7 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable, $callable, 'prefix_', '_suffix');
         
-        $this->assertEquals('prefix_' . hash('md5', 'test') . '_suffix', (string)$actual);
+        $this->assertSame('prefix_' . hash('md5', 'test') . '_suffix', (string)$actual);
     }
 
     #[Test]
@@ -145,7 +145,7 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable);
         
-        $this->assertEquals(hash('sha1', 'different_string'), (string)$actual);
+        $this->assertSame(hash('sha1', 'different_string'), (string)$actual);
     }
 
     #[Test]
@@ -156,7 +156,7 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable, 'md5');
         
-        $this->assertEquals(hash('md5', ''), (string)$actual);
+        $this->assertSame(hash('md5', ''), (string)$actual);
     }
 
     #[Test]
@@ -167,6 +167,6 @@ class HashTest extends TestCase
         
         $actual = $instance($stringable, 'sha256');
         
-        $this->assertEquals(hash('sha256', 'こんにちは'), (string)$actual);
+        $this->assertSame(hash('sha256', 'こんにちは'), (string)$actual);
     }
 }

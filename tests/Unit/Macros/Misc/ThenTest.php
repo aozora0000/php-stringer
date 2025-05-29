@@ -44,7 +44,7 @@ class ThenTest extends TestCase
         // 準備
         $instance = new Then();
         $stringable = $this->createMock(Stringable::class);
-        $firstCallable = fn() => true;
+        $firstCallable = fn(): true => true;
         
         // 実行と検証
         $this->expectException(InvalidArgumentException::class);
@@ -59,7 +59,7 @@ class ThenTest extends TestCase
         // 準備
         $instance = new Then();
         $stringable = $this->createMock(Stringable::class);
-        $firstCallable = fn() => true;
+        $firstCallable = fn(): true => true;
         
         // 実行と検証
         $this->expectException(InvalidArgumentException::class);
@@ -74,8 +74,8 @@ class ThenTest extends TestCase
         // 準備
         $instance = new Then();
         $stringable = $this->createMock(Stringable::class);
-        $conditionCallable = fn(Stringable $s) => true;
-        $actionCallable = fn(Stringable $s) => "transformed_result";
+        $conditionCallable = fn(Stringable $s): true => true;
+        $actionCallable = fn(Stringable $s): string => "transformed_result";
         
         // 実行
         $result = $instance($stringable, $conditionCallable, $actionCallable);
@@ -90,8 +90,8 @@ class ThenTest extends TestCase
         // 準備
         $instance = new Then();
         $stringable = $this->createMock(Stringable::class);
-        $conditionCallable = fn(Stringable $s) => false;
-        $actionCallable = fn(Stringable $s) => "transformed_result";
+        $conditionCallable = fn(Stringable $s): false => false;
+        $actionCallable = fn(Stringable $s): string => "transformed_result";
         
         // 実行
         $result = $instance($stringable, $conditionCallable, $actionCallable);
@@ -108,11 +108,11 @@ class ThenTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $receivedStringable = null;
         
-        $conditionCallable = function(Stringable $s) use (&$receivedStringable) {
+        $conditionCallable = function(Stringable $s) use (&$receivedStringable): false {
             $receivedStringable = $s;
             return false;
         };
-        $actionCallable = fn(Stringable $s) => "result";
+        $actionCallable = fn(Stringable $s): string => "result";
         
         // 実行
         $instance($stringable, $conditionCallable, $actionCallable);
@@ -129,8 +129,8 @@ class ThenTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $receivedStringable = null;
         
-        $conditionCallable = fn(Stringable $s) => true;
-        $actionCallable = function(Stringable $s) use (&$receivedStringable) {
+        $conditionCallable = fn(Stringable $s): true => true;
+        $actionCallable = function(Stringable $s) use (&$receivedStringable): string {
             $receivedStringable = $s;
             return "result";
         };

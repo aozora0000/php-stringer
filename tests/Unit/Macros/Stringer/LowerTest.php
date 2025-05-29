@@ -14,7 +14,7 @@ class LowerTest extends TestCase
      * 大文字の文字列を小文字に変換できることを確認
      */
     #[Test]
-    public function 大文字から小文字への変換()
+    public function 大文字から小文字への変換(): void
     {
         // テスト対象のインスタンスを作成
         $lower = new Lower();
@@ -23,7 +23,7 @@ class LowerTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn() => 'HELLO');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'HELLO');
 
         // テスト実行
         $result = $lower($stringable);
@@ -37,7 +37,7 @@ class LowerTest extends TestCase
      * 空文字列を処理できることを確認
      */
     #[Test]
-    public function 空文字列の処理()
+    public function 空文字列の処理(): void
     {
         // テスト対象のインスタンスを作成
         $lower = new Lower();
@@ -46,7 +46,7 @@ class LowerTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn() => '');
+            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => '');
 
         // テスト実行
         $result = $lower($stringable);

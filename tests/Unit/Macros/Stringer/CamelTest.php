@@ -14,33 +14,33 @@ class CamelTest extends TestCase
     public static function dataProvider(): Iterator
     {
         yield [
-            'expected' => 'helloWorld',
-            'actual' => 'hello-world'
+            'helloWorld',
+            'hello-world'
         ];
 
         yield [
-            'expected' => 'fooBar',
-            'actual' => 'foo_bar'
+            'fooBar',
+            'foo_bar'
         ];
 
         yield [
-            'expected' => 'fooBarBaz',
-            'actual' => 'foo bar baz'
+            'fooBarBaz',
+            'foo bar baz'
         ];
 
         yield [
-            'expected' => 'fooBarBaz',
-            'actual' => 'Foo_Bar_Baz'
+            'fooBarBaz',
+            'Foo_Bar_Baz'
         ];
 
         yield [
-            'expected' => 'fooBar',
-            'actual' => 'FooBar'
+            'fooBar',
+            'FooBar'
         ];
 
         yield [
-            'expected' => 'helloWorld',
-            'actual' => 'hello_world'
+            'helloWorld',
+            'hello_world'
         ];
     }
 

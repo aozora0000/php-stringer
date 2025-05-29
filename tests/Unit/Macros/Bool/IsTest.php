@@ -18,7 +18,7 @@ class IsTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => 'test');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => 'test');
         $this->assertTrue($instance($stringable, 'test'));
     }
 
@@ -29,7 +29,7 @@ class IsTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => 'aaa');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => 'aaa');
         $this->assertFalse($instance($stringable, 'test'));
     }
 }

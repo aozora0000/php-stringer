@@ -11,13 +11,13 @@ use Stringer\Stringable;
 class TrimTest extends TestCase
 {
     #[Test]
-    public function 前後のスペースが削除されることを検証する()
+    public function 前後のスペースが削除されることを検証する(): void
     {
         // Stringableのモックを作成
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn($method, $args) => " テスト \n\t"); // 実際にはtoStringのみ使うが安全策
+            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => " テスト \n\t"); // 実際にはtoStringのみ使うが安全策
 
         $instance = new Trim();
         $actual = $instance($stringable);
@@ -25,12 +25,12 @@ class TrimTest extends TestCase
     }
 
     #[Test]
-    public function 引数で指定された文字が削除されることを検証する()
+    public function 引数で指定された文字が削除されることを検証する(): void
     {
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn($method, $args) => '!!!データ!!!');
+            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => '!!!データ!!!');
 
         $instance = new Trim();
 
@@ -41,12 +41,12 @@ class TrimTest extends TestCase
     }
 
     #[Test]
-    public function 空文字列の場合も正常に動作することを検証する()
+    public function 空文字列の場合も正常に動作することを検証する(): void
     {
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn($method, $args) => '');
+            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => '');
 
         $instance = new Trim();
 
@@ -56,12 +56,12 @@ class TrimTest extends TestCase
     }
 
     #[Test]
-    public function 全部トリム対象の場合空文字になることを検証する()
+    public function 全部トリム対象の場合空文字になることを検証する(): void
     {
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn($method, $args) => "  \t\r\n");
+            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => "  \t\r\n");
 
         $instance = new Trim();
         $actual = $instance($stringable);
@@ -71,12 +71,12 @@ class TrimTest extends TestCase
 
     // 引数で指定したUnicodeトリム対象文字で動作すること
     #[Test]
-    public function 指定したUnicode文字が削除されることを検証する()
+    public function 指定したUnicode文字が削除されることを検証する(): void
     {
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn($method, $args) => '\xE2\x80\x8Bテスト\xE2\x80\x8B');
+            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => '\xE2\x80\x8Bテスト\xE2\x80\x8B');
 
         $instance = new Trim();
 

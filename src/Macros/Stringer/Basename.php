@@ -15,6 +15,7 @@ class Basename implements StringerCallable
         if($stringable->isEmpty()) {
             throw new InvalidArgumentException('String is empty');
         }
+
         return new Stringer(basename(str_replace('\\', '/', $stringable->toString())));
     }
 }

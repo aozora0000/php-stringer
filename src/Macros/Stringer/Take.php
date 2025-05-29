@@ -14,6 +14,7 @@ class Take implements StringerCallable
         if ($limit < 0) {
             return $stringable->substr($limit);
         }
+
         return $stringable->substr(0, $limit);
     }
 }

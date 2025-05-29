@@ -26,7 +26,7 @@ class SubstrTest extends TestCase
             
         $actual = $substr($stringableMock);
         
-        $this->assertEquals('テスト文字列', (string)$actual);
+        $this->assertSame('テスト文字列', (string)$actual);
     }
 
     /**
@@ -43,7 +43,7 @@ class SubstrTest extends TestCase
             
         $actual = $substr($stringableMock, 2);
         
-        $this->assertEquals('ト文字列', (string)$actual);
+        $this->assertSame('ト文字列', (string)$actual);
     }
 
     /**
@@ -60,7 +60,7 @@ class SubstrTest extends TestCase
             
         $actual = $substr($stringableMock, '1', '2');
         
-        $this->assertEquals('スト', (string)$actual);
+        $this->assertSame('スト', (string)$actual);
     }
 
     /**
@@ -77,6 +77,6 @@ class SubstrTest extends TestCase
             
         $actual = $substr($stringableMock, '-3');
         
-        $this->assertEquals('文字列', (string)$actual);
+        $this->assertSame('文字列', (string)$actual);
     }
 }

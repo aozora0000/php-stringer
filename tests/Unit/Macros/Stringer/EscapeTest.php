@@ -23,15 +23,13 @@ class EscapeTest extends TestCase
         $this->assertEquals($expected, $actual->toString());
     }
 
-    public static function htmlエスケープ成功データプロバイダー(): array
+    public static function htmlエスケープ成功データプロバイダー(): \Iterator
     {
-        return [
-            'HTMLタグあり' => ['<script>alert("test")</script>', [], '&lt;script&gt;alert(&quot;test&quot;)&lt;/script&gt;'],
-            'HTMLエンティティ' => ['<p>Hello & Goodbye</p>', [], '&lt;p&gt;Hello &amp; Goodbye&lt;/p&gt;'],
-            '引用符あり' => ['He said "Hello"', [], 'He said &quot;Hello&quot;'],
-            '追加引数あり' => ['<div>content</div>', [ENT_QUOTES, 'UTF-8'], '&lt;div&gt;content&lt;/div&gt;'],
-            '空文字列' => ['', [], ''],
-        ];
+        yield 'HTMLタグあり' => ['<script>alert("test")</script>', [], '&lt;script&gt;alert(&quot;test&quot;)&lt;/script&gt;'];
+        yield 'HTMLエンティティ' => ['<p>Hello & Goodbye</p>', [], '&lt;p&gt;Hello &amp; Goodbye&lt;/p&gt;'];
+        yield '引用符あり' => ['He said "Hello"', [], 'He said &quot;Hello&quot;'];
+        yield '追加引数あり' => ['<div>content</div>', [ENT_QUOTES, 'UTF-8'], '&lt;div&gt;content&lt;/div&gt;'];
+        yield '空文字列' => ['', [], ''];
     }
 
     #[Test]
@@ -46,15 +44,13 @@ class EscapeTest extends TestCase
         $this->assertEquals($expected, $actual->toString());
     }
 
-    public static function urlエスケープ成功データプロバイダー(): array
+    public static function urlエスケープ成功データプロバイダー(): \Iterator
     {
-        return [
-            'スペースあり' => ['http://example.com/hello world', [], 'http://example.com/helloworld'],
-            '特殊文字あり' => ['https://example.com/param=value&other=test', [], 'https://example.com/param=value&other=test'],
-            '日本語あり' => ['http://example.com/こんにちは世界', [], 'http://example.com/こんにちは世界'],
-            '追加引数あり' => ['ftp://example.com/test string', [['ftp']], 'ftp://example.com/teststring'],
-            '空文字列' => ['http://', [], 'http://'],
-        ];
+        yield 'スペースあり' => ['http://example.com/hello world', [], 'http://example.com/helloworld'];
+        yield '特殊文字あり' => ['https://example.com/param=value&other=test', [], 'https://example.com/param=value&other=test'];
+        yield '日本語あり' => ['http://example.com/こんにちは世界', [], 'http://example.com/こんにちは世界'];
+        yield '追加引数あり' => ['ftp://example.com/test string', [['ftp']], 'ftp://example.com/teststring'];
+        yield '空文字列' => ['http://', [], 'http://'];
     }
 
     #[Test]
@@ -68,15 +64,13 @@ class EscapeTest extends TestCase
         $this->assertEquals($expected, $actual->toString());
     }
 
-    public static function sqlエスケープ成功データプロバイダー(): array
+    public static function sqlエスケープ成功データプロバイダー(): \Iterator
     {
-        return [
-            'SQLインジェクション攻撃' => ["test'; DROP TABLE users; --", "test\'; DROP TABLE users; "],
-            '単一引用符' => ["O'Brien", "O\'Brien"],
-            '複数の引用符' => ["'test' AND '1'='1'", "\'test\' AND \'1\'=\'1\'"],
-            '通常の文字列' => ['normal text', 'normal text'],
-            '空文字列' => ['', ''],
-        ];
+        yield 'SQLインジェクション攻撃' => ["test'; DROP TABLE users; --", "test\'; DROP TABLE users; "];
+        yield '単一引用符' => ["O'Brien", "O\'Brien"];
+        yield '複数の引用符' => ["'test' AND '1'='1'", "\'test\' AND \'1\'=\'1\'"];
+        yield '通常の文字列' => ['normal text', 'normal text'];
+        yield '空文字列' => ['', ''];
     }
 
     #[Test]
@@ -91,15 +85,13 @@ class EscapeTest extends TestCase
         ($instance)($stringer, $invalidType);
     }
 
-    public static function 無効なエスケープタイプデータプロバイダー(): array
+    public static function 無効なエスケープタイプデータプロバイダー(): \Iterator
     {
-        return [
-            'xml' => ['test', 'xml'],
-            'json' => ['test', 'json'],
-            'csv' => ['test', 'csv'],
-            '空文字列' => ['test', ''],
-            '存在しないタイプ' => ['test', 'nonexistent'],
-        ];
+        yield 'xml' => ['test', 'xml'];
+        yield 'json' => ['test', 'json'];
+        yield 'csv' => ['test', 'csv'];
+        yield '空文字列' => ['test', ''];
+        yield '存在しないタイプ' => ['test', 'nonexistent'];
     }
 
     #[Test]
@@ -114,14 +106,12 @@ class EscapeTest extends TestCase
         ($instance)($stringer, $invalidType);
     }
 
-    public static function 非文字列エスケープタイプデータプロバイダー(): array
+    public static function 非文字列エスケープタイプデータプロバイダー(): \Iterator
     {
-        return [
-            '数値' => ['test', 123],
-            '配列' => ['test', ['html']],
-            'boolean' => ['test', true],
-            'オブジェクト' => ['test', new \stdClass()],
-        ];
+        yield '数値' => ['test', 123];
+        yield '配列' => ['test', ['html']];
+        yield 'boolean' => ['test', true];
+        yield 'オブジェクト' => ['test', new \stdClass()];
     }
 
     #[Test]

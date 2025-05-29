@@ -13,7 +13,7 @@ class Studly implements StringerCallable
 
     public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
-        return $this->when($stringable, $arguments, fn() => new Stringer(implode(array_map(
+        return $this->when($stringable, $arguments, fn(): Stringer => new Stringer(implode('', array_map(
             fn(Stringer $stringer) => $stringer->ucfirst(),
             $stringable->replace(['-', '_'], ' ')->split(' ')
         ))));

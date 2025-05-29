@@ -13,6 +13,7 @@ class IsDatetime implements StringerCallable
         if($stringable->isEmpty()) {
             return false;
         }
+
         try {
             Carbon::parse($stringable->toString());
             return true;

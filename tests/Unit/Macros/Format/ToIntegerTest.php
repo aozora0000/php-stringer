@@ -24,7 +24,7 @@ class ToIntegerTest extends TestCase
         
         // __callメソッドを使用してメソッドコールをモック化
         $stringable->method('__call')
-            ->willReturnCallback(function ($method, $arguments) {
+            ->willReturnCallback(function (string $method, array $arguments): Stringable|string|int|float|bool|array {
                 return match ($method) {
                     'isInteger' => true,
                     'toString' => "123",
@@ -50,7 +50,7 @@ class ToIntegerTest extends TestCase
         
         // __callメソッドを使用してメソッドコールをモック化
         $stringable->method('__call')
-            ->willReturnCallback(function ($method, $arguments) {
+            ->willReturnCallback(function (string $method, array $arguments): Stringable|string|int|float|bool|array {
                 return match ($method) {
                     'isInteger' => false,
                     'toString' => "aaa",

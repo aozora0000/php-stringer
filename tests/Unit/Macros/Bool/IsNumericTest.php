@@ -18,7 +18,7 @@ class IsNumericTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => '123');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '123');
         $this->assertTrue($instance($stringable));
     }
 
@@ -29,7 +29,7 @@ class IsNumericTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => '-123');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '-123');
         $this->assertTrue($instance($stringable));
     }
 
@@ -40,7 +40,7 @@ class IsNumericTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => '123.456');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '123.456');
         $this->assertTrue($instance($stringable));
     }
 
@@ -51,7 +51,7 @@ class IsNumericTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => 'test');
+            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => 'test');
         $this->assertFalse($instance($stringable));
     }
 }

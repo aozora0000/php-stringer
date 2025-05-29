@@ -14,7 +14,7 @@ class StudlyTest extends TestCase
      * スタッドリーケースで単語を大文字に変換できるか確認する
      */
     #[Test]
-    public function 英単語区切りがハイフンの場合スタッドリーケースに変換できる()
+    public function 英単語区切りがハイフンの場合スタッドリーケースに変換できる(): void
     {
         $actual = new Stringer('hello-world');
 

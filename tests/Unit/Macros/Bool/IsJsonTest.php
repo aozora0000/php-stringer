@@ -16,10 +16,10 @@ class IsJsonTest extends TestCase
      * 正常なJSON文字列の場合、trueが返ること
      */
     #[Test]
-    public function 正常なjson文字列の場合_trueが返ること()
+    public function 正常なjson文字列の場合_trueが返ること(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () => '{"a":1}');
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => '{"a":1}');
 
         $instance = new IsJson();
         $this->assertTrue($instance($stringable));
@@ -29,10 +29,10 @@ class IsJsonTest extends TestCase
      * 不正なJSON文字列の場合、falseが返ること
      */
     #[Test]
-    public function 不正なjson文字列の場合_falseが返ること()
+    public function 不正なjson文字列の場合_falseが返ること(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => '{"a":1');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => '{"a":1');
 
         $instance = new IsJson();
         $this->assertFalse($instance($stringable));

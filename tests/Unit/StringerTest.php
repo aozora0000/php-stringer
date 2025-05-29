@@ -18,7 +18,7 @@ class StringerTest extends TestCase
         $instance = new Stringer('aaa');
         $this->assertSame('aaa', $instance->toString());
         $this->assertSame('test', $instance->test());
-        $this->assertTrue($instance->has('test', 'closure'));
+        $this->assertTrue($instance->has('test'));
         Stringer::remove('test');
         $this->assertFalse($instance->has('test'));;
     }
@@ -30,20 +30,21 @@ class StringerTest extends TestCase
         $files = glob(__DIR__ . '/../../src/Macros/**/*.php');
 
         // ファイル名からクラス名を抽出
-        $fileClasses = array_map(fn($file) => basename($file, '.php'), $files);
+        $fileClasses = array_map(fn($file): string => basename($file, '.php'), $files);
 
         // マクロ配列のキーを取得
-        $macroNames = array_map(fn($class) => substr($class, strrpos($class, '\\') + 1), array_values($macros));
+        $macroNames = array_map(fn($class): string => substr($class, strrpos($class, '\\') + 1), array_values($macros));
         // 差分を検出
         $missingInMacros = array_diff($fileClasses, $macroNames);
         $missingInFiles = array_diff($macroNames, $fileClasses);
 
         // テストメッセージを作成
         $errorMessage = '';
-        if (!empty($missingInMacros)) {
+        if ($missingInMacros !== []) {
             $errorMessage .= "マクロに実装されていないファイルが存在します: " . implode(', ', $missingInMacros) . "\n";
         }
-        if (!empty($missingInFiles)) {
+
+        if ($missingInFiles !== []) {
             $errorMessage .= "ファイルが存在しないマクロが定義されています: " . implode(', ', $missingInFiles);
         }
 
@@ -56,7 +57,7 @@ class StringerTest extends TestCase
         $reflection = new \ReflectionClass(Stringer::class);
         $docblock = $reflection->getDocComment();
         foreach(array_keys(Stringer::all()) as $macro) {
-            $this->assertStringContainsString($macro, $docblock, "$macro not found");
+            $this->assertStringContainsString($macro, $docblock, $macro . ' not found');
         }
     }
 
@@ -65,12 +66,12 @@ class StringerTest extends TestCase
     {
 
         // ファイル名からクラス名を抽出
-        $fileClasses = array_map(function($file) {
+        $fileClasses = array_map(function($file): string {
             return basename($file, '.php');
         }, glob(__DIR__ . '/../../src/Macros/**/*.php'));
 
 
-        $testClasses = array_map(function($file) {
+        $testClasses = array_map(function($file): string {
             return str_replace('Test', '', basename($file, '.php'));
         }, glob(__DIR__ . '/../../tests/Unit/Macros/**/*.php'));
 
@@ -79,7 +80,7 @@ class StringerTest extends TestCase
 
         // テストメッセージを作成
         $errorMessage = '';
-        if (!empty($missingInFiles)) {
+        if ($missingInFiles !== []) {
             $errorMessage .= "テストが存在しないマクロがあります: " . implode(', ', $missingInFiles);
         }
 

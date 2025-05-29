@@ -13,10 +13,10 @@ use Stringer\Stringable;
 class RtrimTest extends TestCase
 {
     #[Test]
-    public function 空白が除去されることを確認する()
+    public function 空白が除去されることを確認する(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () => "テスト　\r\n ");
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => "テスト　\r\n ");
 
         $instance = new Rtrim();
         $actual = $instance($stringable);
@@ -25,10 +25,10 @@ class RtrimTest extends TestCase
     }
 
     #[Test]
-    public function 引数指定の文字が除去されることを確認する()
+    public function 引数指定の文字が除去されることを確認する(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () => "xxテストxx");
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => "xxテストxx");
 
         $instance = new Rtrim();
         $actual = $instance($stringable, 'x');
@@ -37,10 +37,10 @@ class RtrimTest extends TestCase
     }
 
     #[Test]
-    public function 引数なしでデフォルト動作になることを確認する()
+    public function 引数なしでデフォルト動作になることを確認する(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn () => "abc　 \r\n\t");
+        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => "abc　 \r\n\t");
 
         $instance = new Rtrim();
         $actual = $instance($stringable);

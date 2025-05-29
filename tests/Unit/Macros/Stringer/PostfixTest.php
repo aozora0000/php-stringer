@@ -13,7 +13,7 @@ use Stringer\Stringer;
 class PostfixTest extends TestCase
 {
     #[Test]
-    public function 接尾辞を追加できる()
+    public function 接尾辞を追加できる(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Postfix();
@@ -31,7 +31,7 @@ class PostfixTest extends TestCase
     }
     
     #[Test]
-    public function 空文字の接尾辞を追加できる()
+    public function 空文字の接尾辞を追加できる(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Postfix();
@@ -49,7 +49,7 @@ class PostfixTest extends TestCase
     }
     
     #[Test]
-    public function 引数なしでも動作する()
+    public function 引数なしでも動作する(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Postfix();
@@ -66,7 +66,7 @@ class PostfixTest extends TestCase
     }
     
     #[Test]
-    public function 複数の引数がある場合は最初の引数のみを使用する()
+    public function 複数の引数がある場合は最初の引数のみを使用する(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Postfix();
@@ -85,7 +85,7 @@ class PostfixTest extends TestCase
     }
     
     #[Test]
-    public function 戻り値がStringerインスタンスである()
+    public function 戻り値がStringerインスタンスである(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Postfix();
@@ -103,7 +103,7 @@ class PostfixTest extends TestCase
     }
     
     #[Test]
-    public function 空文字列に接尾辞を追加できる()
+    public function 空文字列に接尾辞を追加できる(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Postfix();

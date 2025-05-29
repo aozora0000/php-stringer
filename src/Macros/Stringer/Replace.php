@@ -14,6 +14,7 @@ class Replace implements StringerCallable
         if(!is_array($pattern) && Stringer::create($arguments[0] ?? '')->isRegexPattern()) {
             return new Stringer(preg_replace($arguments[0] ?? '', $arguments[1] ?? '', $stringable->toString()));
         }
+
         return new Stringer(str_replace($arguments[0] ?? '', $arguments[1] ?? '', $stringable->toString()));
     }
 }

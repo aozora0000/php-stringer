@@ -16,6 +16,7 @@ class ReplaceArray implements StringerCallable
         if($search === '' || empty($replace)) {
             return $stringable;
         }
+
         $segments = explode($search, $stringable->toString());
 
         $result = array_shift($segments);

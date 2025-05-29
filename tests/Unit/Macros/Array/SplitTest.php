@@ -17,7 +17,7 @@ class SplitTest extends TestCase
     public function デフォルトセパレータで分割できる(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => 'a,b,c');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'a,b,c');
         
         $instance = new Split();
         
@@ -39,7 +39,7 @@ class SplitTest extends TestCase
     public function カスタムセパレータで分割できる(): void
     {
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => 'a|b|c');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'a|b|c');
         
         $instance = new Split();
         
@@ -53,7 +53,7 @@ class SplitTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => 'a1b2c');;
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'a1b2c');;
 
         $instance = new Split();
 
@@ -77,7 +77,7 @@ class SplitTest extends TestCase
     {
         // 準備
         $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn() => '');
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => '');
         
         $instance = new Split();
         

@@ -18,7 +18,7 @@ class ReplaceTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn () => 'test');
+            ->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'test');
         $this->assertSame('es', $instance($stringable, 't')->toString());
     }
 
@@ -29,7 +29,7 @@ class ReplaceTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(fn () => 'test');
+            ->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'test');
         $this->assertSame('aesa', $instance($stringable, 't', 'a')->toString());
     }
 
@@ -40,7 +40,7 @@ class ReplaceTest extends TestCase
         $stringable = $this->createMock(Stringable::class);
         $stringable
             ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments) {
+            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
                 return match($name) {
                     'toString' => '-_test',
                 };

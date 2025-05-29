@@ -21,7 +21,7 @@ class IsIntegerTest extends TestCase
         // Stringableのモックを作成
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn($method, $arguments) => '123');
+            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => '123');
 
         $result = $instance($stringable);
 
@@ -38,7 +38,7 @@ class IsIntegerTest extends TestCase
 
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn($method, $arguments) => '-123');
+            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => '-123');
 
 
         $result = $instance($stringable);
@@ -56,7 +56,7 @@ class IsIntegerTest extends TestCase
 
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn($method, $arguments) => '123.45');
+            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => '123.45');
 
 
         $result = $instance($stringable);
@@ -74,7 +74,7 @@ class IsIntegerTest extends TestCase
 
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn($method, $arguments) => 'abc123');
+            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => 'abc123');
 
 
         $result = $instance($stringable);
@@ -92,7 +92,7 @@ class IsIntegerTest extends TestCase
 
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')
-            ->willReturnCallback(fn($method, $arguments) => '');
+            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => '');
 
 
         $result = $instance($stringable);

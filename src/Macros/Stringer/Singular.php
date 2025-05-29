@@ -15,7 +15,7 @@ class Singular implements StringerCallable
     public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         /** @var Inflector $inflector */
-        $inflector = $this->whenKey('Inflector', fn() => Inflector::get(Inflector::DEFAULT_LOCALE));
-        return $this->when($stringable, $arguments, fn() => new Stringer($inflector->singularize($stringable->toString())));
+        $inflector = $this->whenKey('Inflector', fn(): Inflector => Inflector::get(Inflector::DEFAULT_LOCALE));
+        return $this->when($stringable, $arguments, fn(): Stringer => new Stringer($inflector->singularize($stringable->toString())));
     }
 }

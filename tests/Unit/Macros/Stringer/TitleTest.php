@@ -25,7 +25,7 @@ class TitleTest extends TestCase
 
     #[Test]
     #[DataProvider('titleCaseDataProvider')]
-    public function titleCaseTest(string $input, string $expected)
+    public function titleCaseTest(string $input, string $expected): void
     {
         // 準備
         $instance = new Title();
