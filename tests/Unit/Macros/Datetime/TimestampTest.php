@@ -15,10 +15,7 @@ class TimestampTest extends TestCase
     public function パース可能な日付文字列の場合タイムスタンプを返却する(): void
     {
         $instance = new Timestamp();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => '2021-01-01 12:00:00');
+        $stringable = new Stringer('2021-01-01 12:00:00');
         $this->assertSame('1609502400', $instance($stringable)->toString());
     }
 
@@ -28,10 +25,17 @@ class TimestampTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $instance = new Timestamp();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments) => 'abcde');
+        $stringable = new Stringer('abcde');
         $instance($stringable);
     }
+
+
+    #[Test]
+    public function カスタムタイムゾーンが適用される(): void
+    {
+        $instance = new Timestamp();
+        $stringable = new Stringer('2021-01-01 12:00:00');
+        $this->assertSame('1609502400', $instance($stringable, 'America/New_York')->toString());
+    }
+
 }

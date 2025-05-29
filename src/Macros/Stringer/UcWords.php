@@ -9,7 +9,7 @@ use Stringer\StringerCallable;
 class UcWords implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         return new Stringer(ucwords($stringable->toString()));
     }

@@ -9,8 +9,9 @@ use Stringer\StringerCallable;
 
 class Timestamp implements StringerCallable
 {
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
-        return new Stringer(Carbon::parse($stringable->toString())->timestamp);
+        $timezone = $arguments[0] ?? date_default_timezone_get();
+        return new Stringer(Carbon::parse($stringable->toString())->timezone($timezone)->timestamp);
     }
 }

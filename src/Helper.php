@@ -30,4 +30,18 @@ trait Helper
     {
         return (bool)preg_match('/^(-|)\d+$/', $argument);
     }
+
+    protected static function is_class_string(string $argument): bool
+    {
+        return class_exists($argument);
+    }
+
+    protected static function is_class_method_string(string $argument, string $sep = '::'): bool
+    {
+        if(str_contains($argument, $sep)) {
+            [$class, $method] = explode($sep, $argument);
+            return class_exists($class) && method_exists($class, $method);
+        }
+        return false;
+    }
 }

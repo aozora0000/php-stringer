@@ -26,7 +26,8 @@
         "nesbot/carbon": "^3.9",
         "ext-ctype": "*",
         "ext-mbstring": "*",
-        "icanboogie/inflector": "^3.0"
+        "icanboogie/inflector": "^3.0",
+        "voku/portable-ascii": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^12.1",

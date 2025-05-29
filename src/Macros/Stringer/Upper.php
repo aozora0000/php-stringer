@@ -9,7 +9,7 @@ use Stringer\StringerCallable;
 class Upper implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         return new Stringer(mb_strtoupper($stringable->toString()));
     }

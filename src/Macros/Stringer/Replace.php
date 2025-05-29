@@ -8,7 +8,7 @@ use Stringer\StringerCallable;
 
 class Replace implements StringerCallable
 {
-    public function __invoke(Stringable $stringable, ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, ...$arguments): Stringable
     {
         $pattern = $arguments[0] ?? '';
         if(!is_array($pattern) && Stringer::create($arguments[0] ?? '')->isRegexPattern()) {

@@ -8,7 +8,7 @@ use Stringer\StringerCallable;
 
 class Offset implements StringerCallable
 {
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         $offset = (int)($arguments[0] ?? 0);
         $length = (int)($arguments[1] ?? $stringable->length());

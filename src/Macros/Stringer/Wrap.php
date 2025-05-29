@@ -8,10 +8,10 @@ use Stringer\StringerCallable;
 
 class Wrap implements StringerCallable
 {
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         $prefix = $arguments[0] ?? '';
-        $suffix = $arguments[1] ?? $prefix;
-        return new Stringer(implode([$prefix, $stringable->toString(), $suffix]));
+        $postfix = $arguments[1] ?? $prefix;
+        return new Stringer(implode([$prefix, $stringable->toString(), $postfix]));
     }
 }

@@ -12,7 +12,7 @@ class IsUrl implements StringerCallable
         'https',
     ];
 
-    public function __invoke(Stringable $stringable, string ...$arguments): mixed
+    public function __invoke(Stringable $stringable, string ...$arguments): bool
     {
         $pattern = '~^
             (LARAVEL_PROTOCOLS)://                                 # protocol

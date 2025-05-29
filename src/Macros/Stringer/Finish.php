@@ -9,7 +9,7 @@ use Stringer\StringerCallable;
 class Finish implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         $cap = $arguments[0] ?? '';
         return new Stringer(preg_replace(

@@ -9,7 +9,7 @@ use Stringer\StringerCallable;
 class PluralStudly implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
 
         $parts = array_filter($stringable->split('/(.)(?=[A-Z])/u'), fn($part) => !$part->isEmpty());

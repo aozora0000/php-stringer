@@ -9,7 +9,7 @@ use Stringer\StringerCallable;
 class Limit implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, string ...$arguments): mixed
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         $limit = $arguments[0] ?? 100;
         $end = $arguments[1] ?? '...';

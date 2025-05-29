@@ -12,7 +12,7 @@ class Singular implements StringerCallable
 {
     use Cache;
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         /** @var Inflector $inflector */
         $inflector = $this->whenKey('Inflector', fn() => Inflector::get(Inflector::DEFAULT_LOCALE));

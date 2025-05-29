@@ -10,7 +10,7 @@ class StartsWith implements StringerCallable
 {
     use Helper;
 
-    public function __invoke(Stringable $stringable, string ...$arguments): mixed
+    public function __invoke(Stringable $stringable, string ...$arguments): bool
     {
         $c = fn($argument): bool  => str_starts_with($stringable->toString(), $argument);
         return match(true) {

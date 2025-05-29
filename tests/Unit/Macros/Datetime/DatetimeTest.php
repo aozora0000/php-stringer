@@ -20,7 +20,7 @@ class DatetimeTest extends TestCase
         $stringable
             ->method('__call')
             ->willReturnCallback(fn(string $name, array $arguments) => '2021-01-01 12:00:00');
-        $this->assertSame('2021-01-01', $instance($stringable, 'Y-m-d')->toString());
+        $this->assertSame('2021-01-01', $instance($stringable, 'Y-m-d', 'Asia/Tokyo')->toString());
     }
 
     #[Test]
@@ -36,4 +36,27 @@ class DatetimeTest extends TestCase
 
         $instance($stringable, 'Y-m-d');
     }
+
+    #[Test]
+    public function UTCタイムゾーンで日時文字列からパース・フォーマットする(): void
+    {
+        $instance = new Datetime();
+        $stringable = $this->createMock(Stringable::class);
+        $stringable
+            ->method('__call')
+            ->willReturnCallback(fn(string $name, array $arguments) => '2021-01-01 12:00:00');
+        $this->assertSame('2021-01-01 12:00:00', $instance($stringable, 'Y-m-d H:i:s', 'UTC')->toString());
+    }
+
+    #[Test]
+    public function 異なるタイムゾーン間で日時文字列をパース・フォーマットする(): void
+    {
+        $instance = new Datetime();
+        $stringable = $this->createMock(Stringable::class);
+        $stringable
+            ->method('__call')
+            ->willReturnCallback(fn(string $name, array $arguments) => '2021-01-01 12:00:00');
+        $this->assertSame('2021-01-01 04:00:00', $instance($stringable, 'Y-m-d H:i:s', 'America/Los_Angeles')->toString());
+    }
+
 }

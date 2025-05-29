@@ -10,7 +10,7 @@ use Stringer\StringerCallable;
 class Sprintf implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         if($arguments === []) {
             throw new InvalidArgumentException("Sprintf requires at least one argument");

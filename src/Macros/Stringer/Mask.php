@@ -9,7 +9,7 @@ use Stringer\StringerCallable;
 class Mask implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         $character = $arguments[0] ?? '*';
         $index = $arguments[1] ?? 0;

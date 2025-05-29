@@ -11,7 +11,7 @@ class Studly implements StringerCallable
 {
     use Cache;
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
         return $this->when($stringable, $arguments, fn() => new Stringer(implode(array_map(
             fn(Stringer $stringer) => $stringer->ucfirst(),

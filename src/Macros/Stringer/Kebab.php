@@ -9,8 +9,8 @@ use Stringer\StringerCallable;
 class Kebab implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, string ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
-        return $stringable->snake('-');
+        return $stringable->replace(['_'], '-')->snake('-');
     }
 }

@@ -20,6 +20,7 @@ class StringerTest extends TestCase
         $this->assertSame('test', $instance->test());
         $this->assertTrue($instance->has('test', 'closure'));
         Stringer::remove('test');
+        $this->assertFalse($instance->has('test'));;
     }
 
     #[Test]
@@ -29,9 +30,7 @@ class StringerTest extends TestCase
         $files = glob(__DIR__ . '/../../src/Macros/**/*.php');
 
         // ファイル名からクラス名を抽出
-        $fileClasses = array_map(function($file) {
-            return basename($file, '.php');
-        }, $files);
+        $fileClasses = array_map(fn($file) => basename($file, '.php'), $files);
 
         // マクロ配列のキーを取得
         $macroNames = array_map(fn($class) => substr($class, strrpos($class, '\\') + 1), array_values($macros));
@@ -49,6 +48,16 @@ class StringerTest extends TestCase
         }
 
         $this->assertEmpty($errorMessage, $errorMessage);
+    }
+
+    #[Test]
+    public function マクロとmethodのdocblockが一致しているか(): void
+    {
+        $reflection = new \ReflectionClass(Stringer::class);
+        $docblock = $reflection->getDocComment();
+        foreach(array_keys(Stringer::all()) as $macro) {
+            $this->assertStringContainsString($macro, $docblock, "$macro not found");
+        }
     }
 
     #[Test]

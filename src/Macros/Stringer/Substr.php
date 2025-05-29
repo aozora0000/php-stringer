@@ -13,7 +13,7 @@ class Substr implements StringerCallable
      * @param int ...$arguments
      * @return Stringer
      */
-    public function __invoke(Stringable $stringable, ...$arguments): Stringer
+    public function __invoke(Stringable $stringable, ...$arguments): Stringable
     {
         $start = $arguments[0] ?? 0;
         $length = $arguments[1] ?? null;
