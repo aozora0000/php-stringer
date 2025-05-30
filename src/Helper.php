@@ -28,7 +28,7 @@ trait Helper
 
     protected static function is_int(string $argument): bool
     {
-        return (bool)preg_match('/^(-|)\d+$/', $argument);
+        return (bool)preg_match('/^(-|)\d+([eE][+-]?\d+)?$/', $argument);
     }
 
     protected static function is_class_string(string $argument): bool
@@ -44,5 +44,16 @@ trait Helper
         }
 
         return false;
+    }
+
+    protected static function hexdump(string $str): string
+    {
+        $hex = '';
+        for ($i = 0, $n = strlen($str); $i < $n; $i++) {
+            $byte = $str[$i];
+            $byteNo = ord($byte);
+            $hex .= sprintf('%02X', $byteNo) . ' ';
+        }
+        return trim($hex);
     }
 }

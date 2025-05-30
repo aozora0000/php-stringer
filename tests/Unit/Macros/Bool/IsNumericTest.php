@@ -15,10 +15,7 @@ class IsNumericTest extends TestCase
     public function 整数だとTrueが返る(): void
     {
         $instance = new IsNumeric();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '123');
+        $stringable = new Stringer('123');
         $this->assertTrue($instance($stringable));
     }
 
@@ -26,10 +23,7 @@ class IsNumericTest extends TestCase
     public function 負の整数だとTrueが返る(): void
     {
         $instance = new IsNumeric();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '-123');
+        $stringable = new Stringer('-123');
         $this->assertTrue($instance($stringable));
     }
 
@@ -37,10 +31,7 @@ class IsNumericTest extends TestCase
     public function 実数だとTrueが返る(): void
     {
         $instance = new IsNumeric();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '123.456');
+        $stringable = new Stringer('123.456');
         $this->assertTrue($instance($stringable));
     }
 
@@ -48,10 +39,23 @@ class IsNumericTest extends TestCase
     public function 文字列だとFalseが返る(): void
     {
         $instance = new IsNumeric();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => 'test');
+        $stringable = new Stringer('test');
         $this->assertFalse($instance($stringable));
+    }
+
+    #[Test]
+    public function 指数表記だとTrueが返る(): void
+    {
+        $instance = new IsNumeric();
+        $stringable = new Stringer('1e5');
+        $this->assertTrue($instance($stringable));
+    }
+
+    #[Test]
+    public function 負の指数表記だとTrueが返る(): void
+    {
+        $instance = new IsNumeric();
+        $stringable = new Stringer('-1e5');
+        $this->assertTrue($instance($stringable));
     }
 }

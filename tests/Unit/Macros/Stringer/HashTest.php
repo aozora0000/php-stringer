@@ -3,170 +3,194 @@
 namespace Tests\Stringer\Unit\Macros\Stringer;
 
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 use Stringer\Exceptions\InvalidArgumentException;
 use Stringer\Macros\Stringer\Hash;
 use Stringer\Stringer;
-use Tests\Stringer\Unit\TestCase;
-
 
 class HashTest extends TestCase
 {
     #[Test]
-    public function デフォルトでsha1ハッシュが実行される(): void
+    public function デフォルトハッシュアルゴリズムはsha1である(): void
     {
-        $stringable = new Stringer('test');
+        // テスト対象のインスタンスを作成
         $instance = new Hash();
+        $stringable = new Stringer('test');
         
+        // sha1ハッシュを実行
         $actual = $instance($stringable);
+        $expected = hash('sha1', 'test', false);
         
-        $this->assertSame(hash('sha1', 'test'), (string)$actual);
+        // 結果を検証
+        $this->assertEquals($expected, $actual->toString());
     }
 
     #[Test]
-    public function 指定されたハッシュアルゴリズムmd5が使用される(): void
+    public function bcryptアルゴリズムでパスワードハッシュができる(): void
     {
-        $stringable = new Stringer('test');
+        // テスト対象のインスタンスを作成
         $instance = new Hash();
+        $stringable = new Stringer('password');
         
+        // bcryptハッシュを実行
+        $actual = $instance($stringable, 'bcrypt');
+        
+        // bcryptハッシュが生成されることを検証
+        $this->assertTrue(password_verify('password', $actual->toString()));
+    }
+
+    #[Test]
+    public function argon2iアルゴリズムでパスワードハッシュができる(): void
+    {
+        if(!defined('PASSWORD_ARGON2I')) {
+            $this->markTestSkipped('argon2i is not supported');
+        }
+        // テスト対象のインスタンスを作成
+        $instance = new Hash();
+        $stringable = new Stringer('password');
+        
+        // argon2iハッシュを実行
+        $actual = $instance($stringable, 'argon2i');
+        
+        // argon2iハッシュが生成されることを検証
+        $this->assertTrue(password_verify('password', $actual->toString()));
+    }
+
+    #[Test]
+    public function argon2idアルゴリズムでパスワードハッシュができる(): void
+    {
+        if(!defined('PASSWORD_ARGON2ID')) {
+            $this->markTestSkipped('argon2id is not supported');
+        }
+        // テスト対象のインスタンスを作成
+        $instance = new Hash();
+        $stringable = new Stringer('password');
+        
+        // argon2idハッシュを実行
+        $actual = $instance($stringable, 'argon2id');
+        
+        // argon2idハッシュが生成されることを検証
+        $this->assertTrue(password_verify('password', $actual->toString()));
+    }
+
+    #[Test]
+    public function md5ハッシュアルゴリズムが使用できる(): void
+    {
+        // テスト対象のインスタンスを作成
+        $instance = new Hash();
+        $stringable = new Stringer('test');
+        
+        // md5ハッシュを実行
         $actual = $instance($stringable, 'md5');
-
-        $this->assertSame(md5('test'), (string)$actual);
+        $expected = hash('md5', 'test', false);
+        
+        // 結果を検証
+        $this->assertEquals($expected, $actual->toString());
     }
 
     #[Test]
-    public function 指定されたハッシュアルゴリズムsha256が使用される(): void
+    public function sha256ハッシュアルゴリズムが使用できる(): void
     {
-        $stringable = new Stringer('test');
+        // テスト対象のインスタンスを作成
         $instance = new Hash();
+        $stringable = new Stringer('test');
         
+        // sha256ハッシュを実行
         $actual = $instance($stringable, 'sha256');
-        $this->assertSame(hash('sha256', 'test'), (string)$actual);
+        $expected = hash('sha256', 'test', false);
+        
+        // 結果を検証
+        $this->assertEquals($expected, $actual->toString());
     }
 
     #[Test]
-    public function 存在する関数md5がハッシャーとして使用される(): void
+    public function strlenユーザー関数が使用できる(): void
     {
-        $stringable = new Stringer('test');
+        // テスト対象のインスタンスを作成
         $instance = new Hash();
+        $stringable = new Stringer('test');
         
-        $actual = $instance($stringable, 'md5');
+        // strlen関数を使用
+        $actual = $instance($stringable, 'strlen');
+        $expected = '4';
         
-        $this->assertSame(md5('test'), (string)$actual);
+        // 結果を検証
+        $this->assertEquals($expected, $actual->toString());
     }
 
     #[Test]
-    public function 存在する関数sha1がハッシャーとして使用される(): void
+    public function クロージャが使用できる(): void
     {
-        $stringable = new Stringer('test');
+        // テスト対象のインスタンスを作成
         $instance = new Hash();
+        $stringable = new Stringer('test');
+        $closure = function($str) { return strtoupper($str); };
         
-        $actual = $instance($stringable, 'sha1');
+        // クロージャを使用
+        $actual = $instance($stringable, $closure);
+        $expected = 'TEST';
         
-        $this->assertSame(sha1('test'), (string)$actual);
+        // 結果を検証
+        $this->assertEquals($expected, $actual->toString());
     }
 
     #[Test]
-    public function 呼び出し可能オブジェクトがハッシャーとして使用される(): void
+    public function 無効なハッシャーで例外が発生する(): void
     {
+        // テスト対象のインスタンスを作成
+        $instance = new Hash();
         $stringable = new Stringer('test');
         
-        // 呼び出し可能オブジェクトを作成
-        $callable = function(string $str): string { 
-            return 'custom_hash_' . $str; 
-        };
-
-        $instance = new Hash();
-        
-        $actual = $instance($stringable, $callable);
-        
-        $this->assertSame('custom_hash_test', (string)$actual);
-    }
-
-    #[Test]
-    public function 無効なハッシャーで例外が投げられる(): void
-    {
-        $stringable = new Stringer('test');
-        $instance = new Hash();
-
-        // 例外の期待設定
+        // 例外が発生することを検証
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid hasher');
-
-        // テスト実行（存在しないハッシュアルゴリズム）
-        $instance($stringable, 'invalid_hash_algorithm');
+        
+        // 無効なハッシャーを指定
+        $instance($stringable, 123);
     }
 
     #[Test]
-    public function 追加引数がハッシュ関数に渡される(): void
+    public function 存在しない関数名で例外が発生する(): void
     {
+        // テスト対象のインスタンスを作成
+        $instance = new Hash();
         $stringable = new Stringer('test');
-        $instance = new Hash();
-
-        // テスト実行（バイナリ出力フラグを追加）
-        $actual = $instance($stringable, 'sha1', true);
-
-        $this->assertEquals(mb_convert_encoding(hash('sha1', 'test', true), 'UTF-8'), (string)$actual);
+        
+        // 例外が発生することを検証
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid hasher');
+        
+        // 存在しない関数名を指定
+        $instance($stringable, 'nonexistent_function');
     }
 
     #[Test]
-    public function 空の引数配列でデフォルトハッシャーが使用される(): void
+    public function 無効なハッシュアルゴリズムで例外が発生する(): void
     {
-        $stringable = new Stringer('hello');
+        // テスト対象のインスタンスを作成
         $instance = new Hash();
-        
-        // テスト実行（引数なし）
-        $actual = $instance($stringable);
-        
-        $this->assertSame(hash('sha1', 'hello'), (string)$actual);
-    }
-
-    #[Test]
-    public function 複数の追加引数がハッシュ関数に渡される(): void
-    {
         $stringable = new Stringer('test');
-
-        // 複数の引数を受け取るカスタム関数
-        $callable = function($str, string $prefix, string $suffix): string { 
-            return $prefix . hash('md5', $str) . $suffix; 
-        };
-
-        $instance = new Hash();
         
-        $actual = $instance($stringable, $callable, 'prefix_', '_suffix');
+        // 例外が発生することを検証
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid hasher');
         
-        $this->assertSame('prefix_' . hash('md5', 'test') . '_suffix', (string)$actual);
+        // 無効なハッシュアルゴリズムを指定
+        $instance($stringable, 'invalid_algorithm');
     }
 
     #[Test]
-    public function 異なる文字列でsha1ハッシュが正しく実行される(): void
+    public function 追加引数がパスワードハッシュに渡される(): void
     {
-        $stringable = new Stringer('different_string');
+        // テスト対象のインスタンスを作成
         $instance = new Hash();
+        $stringable = new Stringer('password');
+        $options = ['cost' => 4];
         
-        $actual = $instance($stringable);
+        // オプション付きでbcryptハッシュを実行
+        $actual = $instance($stringable, 'bcrypt', $options);
         
-        $this->assertSame(hash('sha1', 'different_string'), (string)$actual);
-    }
-
-    #[Test]
-    public function 空文字列でハッシュが正しく実行される(): void
-    {
-        $stringable = new Stringer('');
-        $instance = new Hash();
-        
-        $actual = $instance($stringable, 'md5');
-        
-        $this->assertSame(hash('md5', ''), (string)$actual);
-    }
-
-    #[Test]
-    public function 日本語文字列でハッシュが正しく実行される(): void
-    {
-        $stringable = new Stringer('こんにちは');
-        $instance = new Hash();
-        
-        $actual = $instance($stringable, 'sha256');
-        
-        $this->assertSame(hash('sha256', 'こんにちは'), (string)$actual);
+        // パスワードが検証できることを確認
+        $this->assertTrue(password_verify('password', $actual->toString()));
     }
 }

@@ -11,11 +11,17 @@ use Stringer\Macros\Bool\EndsWith;
 use Stringer\Macros\Bool\Is;
 use Stringer\Macros\Bool\IsAccepted;
 use Stringer\Macros\Bool\IsBoolean;
+use Stringer\Macros\Bool\IsClass;
+use Stringer\Macros\Bool\IsClassMethod;
 use Stringer\Macros\Bool\IsContains;
 use Stringer\Macros\Bool\IsContainsAll;
 use Stringer\Macros\Bool\IsDatetime;
+use Stringer\Macros\Bool\IsDirectory;
+use Stringer\Macros\Bool\IsEmail;
 use Stringer\Macros\Bool\IsEmpty;
 use Stringer\Macros\Bool\IsEqual;
+use Stringer\Macros\Bool\IsFile;
+use Stringer\Macros\Bool\IsHTML;
 use Stringer\Macros\Bool\IsInteger;
 use Stringer\Macros\Bool\IsJson;
 use Stringer\Macros\Bool\IsMatch;
@@ -55,6 +61,7 @@ use Stringer\Macros\Stringer\Plural;
 use Stringer\Macros\Stringer\PluralStudly;
 use Stringer\Macros\Stringer\Postfix;
 use Stringer\Macros\Stringer\Prefix;
+use Stringer\Macros\Stringer\Random;
 use Stringer\Macros\Stringer\Remove;
 use Stringer\Macros\Stringer\Repeat;
 use Stringer\Macros\Stringer\Replace;
@@ -132,11 +139,12 @@ use Stringer\Macros\Stringer\Wrap;
  * @method Stringer take(int $length = 0)
  * @method Stringer hash(string $algorithm = 'sha1', ...$arguments)
  * @method Stringer escape(string $type = 'html')
- * @method Stringer wordWrap(int $width = 75, string $break = "\n", bool $cut = false)
+ * @method Stringer wordWrap(int $width = 75, string $break = "\n")
  * @method Stringer unwrap(string $prefix = '', string $postfix = '')
  * @method Stringer basename()
  * @method Stringer prefix(string $prefix = '')
  * @method Stringer postfix(string $postfix = '')
+ * @method Stringer random(int $length = 10)
  *
  * @method boolean is(string | Stringer $argument = '')
  * @method boolean isEqual(string|Stringer $argument = '')
@@ -150,10 +158,16 @@ use Stringer\Macros\Stringer\Wrap;
  * @method boolean isMatch(string $pattern = '')
  * @method boolean isRegexPattern()
  * @method boolean isJson()
+ * @method boolean isHTML(string ...$tags)
  * @method boolean isUrl()
+ * @method boolean isEmail()
  * @method boolean startsWith(string ...$arguments)
  * @method boolean endsWith(string ...$arguments)
  * @method boolean isDatetime()
+ * @method boolean isClass()
+ * @method boolean isClassMethod(string $sep = '::')
+ * @method boolean isFile(string $root = '')
+ * @method boolean isDirectory(string $root = '')
  *
  * @method Stringer[] split(string $delimiter = ',')
  */
@@ -222,6 +236,7 @@ class Stringer implements Stringable, JsonSerializable
         'basename' => Basename::class,
         'prefix' => Prefix::class,
         'postfix' => Postfix::class,
+        'random' => Random::class,
 
         // Boolean
         'is' => Is::class,
@@ -238,8 +253,14 @@ class Stringer implements Stringable, JsonSerializable
         'isMatch' => IsMatch::class,
         'isRegexPattern' => IsRegexPattern::class,
         'isJson' => IsJson::class,
+        'isHTML' => IsHTML::class,
         'isUrl' => IsUrl::class,
+        'isEmail' => IsEmail::class,
         'isDatetime' => IsDatetime::class,
+        'isClass' => IsClass::class,
+        'isClassMethod' => IsClassMethod::class,
+        'isFile' => IsFile::class,
+        'isDirectory' => IsDirectory::class,
 
         // Array
         'split' => Split::class,
@@ -249,10 +270,6 @@ class Stringer implements Stringable, JsonSerializable
 
     public function __construct(string|Stringable $string)
     {
-        if(preg_match('~[^\x20-\x7E\t\r\n]~', (string)$string) > 0) {
-            $string = mb_convert_encoding($string, 'UTF-8');
-        }
-
         $this->string = preg_replace('/[\x{200B}-\x{200D}]/u', '', is_string($string) ? $string : $string->toString());
     }
 

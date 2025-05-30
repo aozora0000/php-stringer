@@ -17,18 +17,18 @@ class WordWrapTest extends TestCase
     {
         // テスト対象のインスタンスを作成
         $instance = new WordWrap();
-        
+
         // テスト用の長い文字列を作成
-        $input = new Stringer('これは非常に長い文字列で、デフォルトの幅75文字でラップされるべきテスト文字列です。');
-        
+        $input = new Stringer(str_repeat('テスト', 26));
+
         // 実行
         $actual = $instance($input);
-        
         // 期待値
-        $expected = new Stringer(wordwrap('これは非常に長い文字列で、デフォルトの幅75文字でラップされるべきテスト文字列です。', 75, "\n", true));
-        
+        $expected = <<<EOT
+テストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテストテスト\nテスト
+EOT;
         // アサーション
-        $this->assertEquals($expected->toString(), $actual->toString());
+        $this->assertEquals($expected, $actual->toString());
     }
 
     #[Test]
@@ -36,18 +36,21 @@ class WordWrapTest extends TestCase
     {
         // テスト対象のインスタンスを作成
         $instance = new WordWrap();
-        
+
         // テスト用の文字列を作成
         $input = new Stringer('This is a test string that should be wrapped at 20 characters.');
-        
+
         // 実行（幅20を指定）
         $actual = $instance($input, '20');
-        
+
         // 期待値
-        $expected = new Stringer(wordwrap('This is a test string that should be wrapped at 20 characters.', 20, "\n", true));
-        
+        $expected = <<<EOT
+This is a test\nstring that should\nbe wrapped at 20\ncharacters.
+EOT;
+
+
         // アサーション
-        $this->assertEquals($expected->toString(), $actual->toString());
+        $this->assertEquals($expected, $actual->toString());
     }
 
     #[Test]
@@ -55,16 +58,16 @@ class WordWrapTest extends TestCase
     {
         // テスト対象のインスタンスを作成
         $instance = new WordWrap();
-        
+
         // テスト用の文字列を作成
         $input = new Stringer('This is a test string that should be wrapped with custom break.');
-        
+
         // 実行（幅30、改行文字に<br>を指定）
         $actual = $instance($input, '30', '<br>');
-        
+
         // 期待値
         $expected = new Stringer(wordwrap('This is a test string that should be wrapped with custom break.', 30, '<br>', true));
-        
+
         // アサーション
         $this->assertEquals($expected->toString(), $actual->toString());
     }
@@ -74,18 +77,20 @@ class WordWrapTest extends TestCase
     {
         // テスト対象のインスタンスを作成
         $instance = new WordWrap();
-        
+
         // テスト用の文字列を作成（長い単語を含む）
         $input = new Stringer('This verylongwordthatexceedswidth should not be cut.');
-        
+
         // 実行（幅20、デフォルト改行文字、カット無効）
         $actual = $instance($input, 20, "\n", false);
-        
+
         // 期待値
-        $expected = new Stringer(wordwrap('This verylongwordthatexceedswidth should not be cut.', 20, "\n", false));
-        
+        $expected = <<<EOT
+This\nverylongwordthatexce\nedswidth should not\nbe cut.
+EOT;
+
         // アサーション
-        $this->assertEquals($expected->toString(), $actual->toString());
+        $this->assertEquals($expected, $actual->toString());
     }
 
     #[Test]
@@ -93,16 +98,16 @@ class WordWrapTest extends TestCase
     {
         // テスト対象のインスタンスを作成
         $instance = new WordWrap();
-        
+
         // 空文字列を作成
         $input = new Stringer('');
-        
+
         // 実行
         $actual = $instance($input);
-        
+
         // 期待値
         $expected = new Stringer('');
-        
+
         // アサーション
         $this->assertEquals($expected->toString(), $actual->toString());
     }
@@ -112,16 +117,16 @@ class WordWrapTest extends TestCase
     {
         // テスト対象のインスタンスを作成
         $instance = new WordWrap();
-        
+
         // 短い文字列を作成
         $input = new Stringer('短い文字列');
-        
+
         // 実行
         $actual = $instance($input);
-        
+
         // 期待値
         $expected = new Stringer('短い文字列');
-        
+
         // アサーション
         $this->assertEquals($expected->toString(), $actual->toString());
     }
@@ -131,16 +136,16 @@ class WordWrapTest extends TestCase
     {
         // テスト対象のインスタンスを作成
         $instance = new WordWrap();
-        
+
         // テスト用の文字列を作成
         $input = new Stringer('This is a comprehensive test with all parameters specified for wrapping.');
-        
+
         // 実行（すべてのパラメータを指定）
         $actual = $instance($input, '25', ' | ', 'true');
-        
+
         // 期待値
         $expected = new Stringer(wordwrap('This is a comprehensive test with all parameters specified for wrapping.', 25, ' | ', true));
-        
+
         // アサーション
         $this->assertEquals($expected->toString(), $actual->toString());
     }

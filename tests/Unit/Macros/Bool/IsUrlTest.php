@@ -36,16 +36,29 @@ class IsUrlTest extends TestCase
     }
 
     /**
-     * http/https以外のスキームではfalseが返ることを確認する
+     * ftpスキームのURLを判定できることを確認する
      */
     #[Test]
-    public function 未サポートスキームは認識されない(): void
+    public function ftpスキームのURLを判定できる(): void
     {
         $stringable = $this->createMock(Stringable::class);
         $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'ftp://example.com/');
 
         $isUrl = new IsUrl();
-        $this->assertFalse($isUrl($stringable));
+        $this->assertTrue($isUrl($stringable, 'ftp'));
+    }
+
+    /**
+     * sftpスキームのURLを判定できることを確認する
+     */
+    #[Test]
+    public function sftpスキームのURLを判定できる(): void
+    {
+        $stringable = $this->createMock(Stringable::class);
+        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'sftp://example.com/');
+
+        $isUrl = new IsUrl();
+        $this->assertTrue($isUrl($stringable, 'sftp'));
     }
 
     /**

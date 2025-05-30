@@ -5,7 +5,7 @@ namespace Tests\Stringer\Unit\Macros\Bool;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Stringer\Macros\Bool\IsInteger;
-use Stringer\Stringable;
+use Stringer\Stringer;
 
 class IsIntegerTest extends TestCase
 {
@@ -19,9 +19,7 @@ class IsIntegerTest extends TestCase
         $instance = new IsInteger();
 
         // Stringableのモックを作成
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => '123');
+        $stringable = new Stringer('123');
 
         $result = $instance($stringable);
 
@@ -36,9 +34,7 @@ class IsIntegerTest extends TestCase
     {
         $instance = new IsInteger();
 
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => '-123');
+        $stringable = new Stringer('-123');
 
 
         $result = $instance($stringable);
@@ -54,9 +50,7 @@ class IsIntegerTest extends TestCase
     {
         $instance = new IsInteger();
 
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => '123.45');
+        $stringable = new Stringer('123.45');
 
 
         $result = $instance($stringable);
@@ -72,9 +66,7 @@ class IsIntegerTest extends TestCase
     {
         $instance = new IsInteger();
 
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => 'abc123');
+        $stringable = new Stringer('abc123');
 
 
         $result = $instance($stringable);
@@ -90,13 +82,71 @@ class IsIntegerTest extends TestCase
     {
         $instance = new IsInteger();
 
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(string $method, array $arguments): Stringable|string|int|float|bool|array => '');
+        $stringable = new Stringer('');
 
 
         $result = $instance($stringable);
 
         $this->assertFalse($result);
+    }
+
+    /**
+     * 指数表記の正の整数が与えられた場合、trueを返すことを確認
+     */
+    #[Test]
+    public function 指数表記の正の整数でtrueを返す(): void
+    {
+        $instance = new IsInteger();
+
+        $stringable = new Stringer('1e5');
+
+        $result = $instance($stringable);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * 指数表記の負の整数が与えられた場合、trueを返すことを確認
+     */
+    #[Test]
+    public function 指数表記の負の整数でtrueを返す(): void
+    {
+        $instance = new IsInteger();
+
+        $stringable = new Stringer('-1e5');
+
+        $result = $instance($stringable);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * 正の指数を持つ指数表記の整数が与えられた場合、trueを返すことを確認
+     */
+    #[Test]
+    public function 正の指数を持つ指数表記の整数でtrueを返す(): void
+    {
+        $instance = new IsInteger();
+
+        $stringable = new Stringer('1e+5');
+
+        $result = $instance($stringable);
+
+        $this->assertTrue($result);
+    }
+
+    /**
+     * 負の指数を持つ指数表記の整数が与えられた場合、trueを返すことを確認
+     */
+    #[Test]
+    public function 負の指数を持つ指数表記の整数でtrueを返す(): void
+    {
+        $instance = new IsInteger();
+
+        $stringable = new Stringer('1e-5');
+
+        $result = $instance($stringable);
+
+        $this->assertTrue($result);
     }
 }

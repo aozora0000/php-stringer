@@ -9,7 +9,7 @@ use Stringer\StringerCallable;
 class Then implements StringerCallable
 {
 
-    public function __invoke(Stringable $stringable, ...$arguments): Stringable
+    public function __invoke(Stringable $stringable, ...$arguments): mixed
     {
         if(!isset($arguments[0]) || !is_callable($arguments[0])) {
             throw new InvalidArgumentException("First Argument Then requires a callable");

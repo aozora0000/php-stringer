@@ -14,8 +14,9 @@ class IsUrl implements StringerCallable
 
     public function __invoke(Stringable $stringable, string ...$arguments): bool
     {
+        $protocols = array_merge(self::$protocols, $arguments);
         $pattern = '~^
-            (LARAVEL_PROTOCOLS)://                                 # protocol
+            (PROTOCOLS)://                                 # protocol
             (((?:[\_\.\pL\pN-]|%[0-9A-Fa-f]{2})+:)?((?:[\_\.\pL\pN-]|%[0-9A-Fa-f]{2})+)@)?  # basic auth
             (
                 ([\pL\pN\pS\-\_\.])+(\.?([\pL\pN]|xn\-\-[\pL\pN-]+)+\.?) # a domain name
@@ -31,6 +32,6 @@ class IsUrl implements StringerCallable
             (?:\? (?:[\pL\pN\-._\~!$&\'\[\]()*+,;=:@/?]|%[0-9A-Fa-f]{2})* )?   # a query (optional)
             (?:\# (?:[\pL\pN\-._\~!$&\'()*+,;=:@/?]|%[0-9A-Fa-f]{2})* )?       # a fragment (optional)
         $~ixu';
-        return preg_match(str_replace('LARAVEL_PROTOCOLS', implode('|', self::$protocols), $pattern), $stringable->toString()) > 0;
+        return preg_match(str_replace('PROTOCOLS', implode('|', $protocols), $pattern), $stringable->toString()) > 0;
     }
 }
