@@ -2,15 +2,17 @@
 
 namespace Stringer\Macros\Stringer;
 
+use Stringer\Helper;
 use Stringer\Stringable;
 use Stringer\StringerCallable;
 
 class Take implements StringerCallable
 {
+    use Helper;
 
     public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
-        $limit = $arguments[0] ?? 0;
+        $limit = self::param($arguments, 0, 1);
         if ($limit < 0) {
             return $stringable->substr($limit);
         }

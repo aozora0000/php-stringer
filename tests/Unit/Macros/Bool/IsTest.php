@@ -15,10 +15,7 @@ class IsTest extends TestCase
     public function 同じ値の場合はTrueを返す(): void
     {
         $instance = new Is();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => 'test');
+        $stringable = new Stringer('test');
         $this->assertTrue($instance($stringable, 'test'));
     }
 
@@ -26,10 +23,7 @@ class IsTest extends TestCase
     public function 違う値の場合はFalseを返す(): void
     {
         $instance = new Is();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => 'aaa');
+        $stringable = new Stringer('aaa');
         $this->assertFalse($instance($stringable, 'test'));
     }
 }

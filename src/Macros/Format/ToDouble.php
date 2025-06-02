@@ -12,8 +12,9 @@ class ToDouble implements StringerCallable
     use Helper;
     public function __invoke(Stringable $stringable, string ...$arguments): float
     {
+        $precision = self::param($arguments, 0, '');
         return match (true) {
-            $stringable->isNumeric() && self::is_int($arguments[0] ?? '') => round($stringable->toString(), $arguments[0]),
+            $stringable->isNumeric() && self::is_int($precision) => round($stringable->toString(), $precision),
             $stringable->isNumeric() => (float)$stringable->toString(),
             default => throw new \InvalidArgumentException("Cannot convert to double"),
         };

@@ -38,7 +38,7 @@ class TakeTest extends TestCase
     }
     
     #[Test]
-    public function ゼロを指定した場合は空文字列を返す(): void
+    public function ゼロを指定した場合は空文字を返す(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Take();
@@ -52,7 +52,7 @@ class TakeTest extends TestCase
     }
     
     #[Test]
-    public function 引数が指定されなかった場合はデフォルト値の0が使用される(): void
+    public function 引数が指定されなかった場合はデフォルト値の1が使用される(): void
     {
         // テスト対象のインスタンスを作成
         $instance = new Take();
@@ -62,7 +62,7 @@ class TakeTest extends TestCase
         $actual = $instance($stringable);
         
         // 検証
-        $this->assertEquals('', $actual->toString());
+        $this->assertEquals('H', $actual->toString());
     }
     
     #[Test]

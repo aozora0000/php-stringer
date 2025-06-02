@@ -5,6 +5,7 @@ namespace Tests\Stringer\Unit\Macros\Bool;
 use PHPUnit\Framework\Attributes\Test;
 use Stringer\Macros\Bool\IsEmpty;
 use Stringer\Stringable;
+use Stringer\Stringer;
 use Tests\Stringer\Unit\TestCase;
 
 class IsEmptyTest extends TestCase
@@ -13,10 +14,7 @@ class IsEmptyTest extends TestCase
     public function 空文字ではTrueが返る(): void
     {
         $instance = new IsEmpty();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => '');
+        $stringable = new Stringer('');
         $this->assertTrue($instance($stringable));
     }
 
@@ -24,10 +22,7 @@ class IsEmptyTest extends TestCase
     public function 空文字でないとFalseが返る(): void
     {
         $instance = new IsEmpty();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => 'test');
+        $stringable = new Stringer('test');
         $this->assertFalse($instance($stringable));
     }
 }

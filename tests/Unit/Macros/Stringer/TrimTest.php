@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Stringer\Trim;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 // Trimクラスのユニットテスト
 class TrimTest extends TestCase
@@ -14,10 +15,7 @@ class TrimTest extends TestCase
     public function 前後のスペースが削除されることを検証する(): void
     {
         // Stringableのモックを作成
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => " テスト \n\t"); // 実際にはtoStringのみ使うが安全策
+        $stringable = new Stringer(" テスト \n\t"); // 実際にはtoStringのみ使うが安全策
 
         $instance = new Trim();
         $actual = $instance($stringable);
@@ -27,10 +25,7 @@ class TrimTest extends TestCase
     #[Test]
     public function 引数で指定された文字が削除されることを検証する(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => '!!!データ!!!');
+        $stringable = new Stringer('!!!データ!!!');
 
         $instance = new Trim();
 
@@ -43,10 +38,7 @@ class TrimTest extends TestCase
     #[Test]
     public function 空文字列の場合も正常に動作することを検証する(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => '');
+        $stringable = new Stringer('');
 
         $instance = new Trim();
 
@@ -58,10 +50,7 @@ class TrimTest extends TestCase
     #[Test]
     public function 全部トリム対象の場合空文字になることを検証する(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => "  \t\r\n");
+        $stringable = new Stringer("  \t\r\n");
 
         $instance = new Trim();
         $actual = $instance($stringable);
@@ -73,10 +62,7 @@ class TrimTest extends TestCase
     #[Test]
     public function 指定したUnicode文字が削除されることを検証する(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => '\xE2\x80\x8Bテスト\xE2\x80\x8B');
+        $stringable = new Stringer('\xE2\x80\x8Bテスト\xE2\x80\x8B');
 
         $instance = new Trim();
 

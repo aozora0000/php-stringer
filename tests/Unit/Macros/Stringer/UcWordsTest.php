@@ -14,8 +14,7 @@ class UcWordsTest extends TestCase
     public function 単語の最初の文字を大文字に変換する(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello world');
+        $stringable = new Stringer('hello world');
         $instance = new UcWords();
 
         // 実行
@@ -29,8 +28,7 @@ class UcWordsTest extends TestCase
     public function 空文字列の場合は空文字列を返す(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'');
+        $stringable = new Stringer('');
         $instance = new UcWords();
 
         // 実行
@@ -44,8 +42,7 @@ class UcWordsTest extends TestCase
     public function 単一単語の場合は最初の文字のみ大文字になる(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello');
+        $stringable = new Stringer('hello');
         $instance = new UcWords();
 
         // 実行
@@ -59,8 +56,7 @@ class UcWordsTest extends TestCase
     public function 複数のスペースで区切られた単語も正しく変換される(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello  world  test');
+        $stringable = new Stringer('hello  world  test');
         $instance = new UcWords();
 
         // 実行
@@ -74,8 +70,7 @@ class UcWordsTest extends TestCase
     public function 数字が含まれた文字列も正しく処理される(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello123 world456');
+        $stringable = new Stringer('hello123 world456');
         $instance = new UcWords();
 
         // 実行
@@ -89,8 +84,7 @@ class UcWordsTest extends TestCase
     public function 戻り値はStringerインスタンスである(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'test');
+        $stringable = new Stringer('test');
         $instance = new UcWords();
 
         // 実行
@@ -104,8 +98,7 @@ class UcWordsTest extends TestCase
     public function 引数が渡されても正常に動作する(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array =>'hello world');
+        $stringable = new Stringer('hello world');
         $instance = new UcWords();
 
         // 実行

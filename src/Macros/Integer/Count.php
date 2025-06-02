@@ -2,16 +2,20 @@
 
 namespace Stringer\Macros\Integer;
 
+use Stringer\Helper;
 use Stringer\Stringable;
 use Stringer\StringerCallable;
 
 class Count implements StringerCallable
 {
+    use Helper;
+
     public function __invoke(Stringable $stringable, string ...$arguments): int
     {
+        $needle = self::param($arguments, 0);
         return match(true) {
-            $stringable->isEmpty(), $arguments === [], $arguments[0] === '' => 0,
-            default => mb_substr_count($stringable->toString(), $arguments[0]),
+            $stringable->isEmpty(), is_null($needle) => 0,
+            default => mb_substr_count($stringable->toString(), $needle),
         };
     }
 }

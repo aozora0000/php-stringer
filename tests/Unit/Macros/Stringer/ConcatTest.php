@@ -16,8 +16,7 @@ class ConcatTest extends TestCase
     #[Test]
     public function 空配列の場合の戻り値(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'abc');
+        $stringable = new Stringer('abc');
 
         $instance = new Concat();
         $actual = $instance($stringable);
@@ -29,8 +28,7 @@ class ConcatTest extends TestCase
     #[Test]
     public function 引数を連結することを確認(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'foo');
+        $stringable = new Stringer('foo');
 
         $instance = new Concat();
         $actual = $instance($stringable, 'bar', 'baz');
@@ -41,8 +39,7 @@ class ConcatTest extends TestCase
     #[Test]
     public function 空文字列は連結されないこと(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'xxx');
+        $stringable = new Stringer('xxx');
 
         $instance = new Concat();
         $actual = $instance($stringable, '', 'yyy');

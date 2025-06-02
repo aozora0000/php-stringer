@@ -6,8 +6,10 @@ use Closure;
 use JsonSerializable;
 use ReflectionClass;
 use ReflectionException;
+use Stringer\Macros\Array\Line;
 use Stringer\Macros\Array\Split;
 use Stringer\Macros\Bool\EndsWith;
+use Stringer\Macros\Bool\HashEqual;
 use Stringer\Macros\Bool\Is;
 use Stringer\Macros\Bool\IsAccepted;
 use Stringer\Macros\Bool\IsBoolean;
@@ -23,6 +25,9 @@ use Stringer\Macros\Bool\IsEqual;
 use Stringer\Macros\Bool\IsFile;
 use Stringer\Macros\Bool\IsHTML;
 use Stringer\Macros\Bool\IsInteger;
+use Stringer\Macros\Bool\IsIP;
+use Stringer\Macros\Bool\IsIPv4;
+use Stringer\Macros\Bool\IsIPv6;
 use Stringer\Macros\Bool\IsJson;
 use Stringer\Macros\Bool\IsMatch;
 use Stringer\Macros\Bool\IsNumeric;
@@ -132,6 +137,7 @@ use Stringer\Macros\Stringer\Wrap;
  * @method Stringer kebab(string $delimiter = '-')
  * @method Stringer camel()
  * @method Stringer limit(int $limit, string $end = '...')
+ * @method Stringer truncate(int $limit, string $end = '...')
  * @method Stringer mask(string $charactor = '*', int $index = 0, string $length = null)
  * @method Stringer concat(string ...$words)
  * @method Stringer reverse()
@@ -168,8 +174,13 @@ use Stringer\Macros\Stringer\Wrap;
  * @method boolean isClassMethod(string $sep = '::')
  * @method boolean isFile(string $root = '')
  * @method boolean isDirectory(string $root = '')
+ * @method boolean hashEqual(string $hash, string $value, ...$arguments)
+ * @method boolean isIPv4()
+ * @method boolean isIPv6()
+ * @method boolean isIP()
  *
  * @method Stringer[] split(string $delimiter = ',')
+ * @method Stringer[] line(string $delimiter = PHP_EOL)
  */
 class Stringer implements Stringable, JsonSerializable
 {
@@ -224,6 +235,7 @@ class Stringer implements Stringable, JsonSerializable
         'kebab' => Kebab::class,
         'camel' => Camel::class,
         'limit' => Limit::class,
+        'truncate' => Limit::class,
         'mask' => Mask::class,
         'concat' => Concat::class,
         'reverse' => Reverse::class,
@@ -261,9 +273,14 @@ class Stringer implements Stringable, JsonSerializable
         'isClassMethod' => IsClassMethod::class,
         'isFile' => IsFile::class,
         'isDirectory' => IsDirectory::class,
+        'hashEqual' => HashEqual::class,
+        'isIPv4' => IsIPv4::class,
+        'isIPv6' => IsIPv6::class,
+        'isIP' => IsIP::class,
 
         // Array
         'split' => Split::class,
+        'line' => Line::class,
     ];
 
     protected string|Stringable $string;

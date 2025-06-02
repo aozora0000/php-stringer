@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Stringer\Finish;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 class FinishTest extends TestCase
 {
@@ -15,11 +16,10 @@ class FinishTest extends TestCase
     #[Test]
     public function 末尾の文字列が1つでも複数でもキャップ文字列で終わる場合に末尾が1つだけ残る(): void
     {
-        $mock = $this->createMock(Stringable::class);
-        $mock->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'foobarbar');
+        $stingable = new Stringer('foobarbar');
 
         $instance = new Finish();
-        $actual = $instance($mock, 'bar');
+        $actual = $instance($stingable, 'bar');
         // Stringerオブジェクトで "foobar" の末尾に "bar" が1つ付加されている事
         $this->assertEquals('foobar', $actual->toString());
     }
@@ -30,11 +30,10 @@ class FinishTest extends TestCase
     #[Test]
     public function 末尾にキャップ文字列が存在しない場合にキャップが追加される(): void
     {
-        $mock = $this->createMock(Stringable::class);
-        $mock->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foo');
+        $stingable = new Stringer('foo');
 
         $instance = new Finish();
-        $actual = $instance($mock, 'bar');
+        $actual = $instance($stingable, 'bar');
         $this->assertEquals('foobar', $actual->toString());
     }
 
@@ -44,11 +43,10 @@ class FinishTest extends TestCase
     #[Test]
     public function キャップ文字列が空の場合は元の文字列を返す(): void
     {
-        $mock = $this->createMock(Stringable::class);
-        $mock->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foo');
+        $stingable = new Stringer('foo');
 
         $instance = new Finish();
-        $actual = $instance($mock, '');
+        $actual = $instance($stingable, '');
         $this->assertEquals('foo', $actual->toString());
     }
 }

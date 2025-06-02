@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Bool\IsMatch;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 class IsMatchTest extends TestCase
 {
@@ -13,8 +14,7 @@ class IsMatchTest extends TestCase
     #[Test]
     public function 正規表現が一致する場合は1を返す(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'abc123');
+        $stringable = new Stringer('abc123');
 
         $instance = new IsMatch();
         $actual = $instance($stringable, '/\d+/');
@@ -26,8 +26,7 @@ class IsMatchTest extends TestCase
     #[Test]
     public function 正規表現が一致しない場合は0を返す(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'abcdef');
+        $stringable = new Stringer('abcdef');
 
         $instance = new IsMatch();
         $actual = $instance($stringable, '/\d+/');
@@ -39,8 +38,7 @@ class IsMatchTest extends TestCase
     #[Test]
     public function パターンが空文字の場合falseを返す(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'abcdef');
+        $stringable = new Stringer('abcdef');
 
         $instance = new IsMatch();
         $actual = $instance($stringable, '');
@@ -52,8 +50,7 @@ class IsMatchTest extends TestCase
     #[Test]
     public function 第二引数未指定の場合falseを返す(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'abcdef');
+        $stringable = new Stringer('abcdef');
 
         $instance = new IsMatch();
         $actual = $instance($stringable);

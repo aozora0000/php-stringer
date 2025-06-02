@@ -18,13 +18,7 @@ class ToBinaryTest extends TestCase
     public function 整数を2進数に変換できる(): void
     {
         $instance = new ToBinary();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable->method('__call')->willReturnCallback(function(string $name, array $arguments): Stringable|string|int|float|bool {
-            return match($name) {
-                'isInteger' => true,
-                'toString' => '42',
-            };
-        });
+        $stringable = new Stringer('42');
         $this->assertSame('101010', $instance($stringable));
     }
 
@@ -38,12 +32,7 @@ class ToBinaryTest extends TestCase
         $this->expectExceptionMessage('Cannot convert to binary');
 
         $instance = new ToBinary();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable->method('__call')->willReturnCallback(function(string $name, array $arguments): Stringable|string|int|float|bool {
-            return match($name) {
-                'isInteger' => false,
-            };
-        });
+        $stringable = new Stringer('aaa');
 
         $instance($stringable);
     }
@@ -55,13 +44,7 @@ class ToBinaryTest extends TestCase
     public function ゼロを2進数に変換できる(): void
     {
         $instance = new ToBinary();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable->method('__call')->willReturnCallback(function(string $name, array $arguments): Stringable|string|int|float|bool {
-            return match($name) {
-                'isInteger' => true,
-                'toString' => '0',
-            };
-        });
+        $stringable = new Stringer('0');
         $this->assertSame('0', $instance($stringable));
     }
 }

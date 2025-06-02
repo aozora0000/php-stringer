@@ -15,11 +15,13 @@ class IsEmail implements StringerCallable
         if(!$stringable->isContains('@')) {
             return false;
         }
-        [, $host] = $stringable->split('@');
+
+        [, $host] = $stringable->split('@', true);
         if(is_null($host) || $host->isEmpty()) {
             return false;
         }
-        $callback = fn(string $type) => checkdnsrr($host, $type);
+
+        $callback = fn(string $type): bool => checkdnsrr($host, $type);
         return
             filter_var($stringable->toString(), FILTER_VALIDATE_EMAIL) !== false &&
             self::some($callback, ['MX', 'A', 'AAAA']);

@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Stringer\Ltrim;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 /**
  * Ltrimクラスのユニットテスト
@@ -19,8 +20,7 @@ class LtrimTest extends TestCase
     public function 左側の特定の文字のみ除去されること(): void
     {
         // StringableをモックしてtoStringで値を返すようにする
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => 'xxABCxx');
+        $stringable = new Stringer('xxABCxx');
 
         $instance = new Ltrim();
         $actual = $instance($stringable, 'x');
@@ -36,8 +36,7 @@ class LtrimTest extends TestCase
     public function デフォルトで空白や制御文字が除去されること(): void
     {
         // StringableをモックしてtoStringで値を返すようにする
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => "\t\r\nABC ");
+        $stringable = new Stringer("\t\r\nABC ");
 
         $instance = new Ltrim();
         $actual = $instance($stringable);
@@ -52,8 +51,7 @@ class LtrimTest extends TestCase
     #[Test]
     public function 複数引数指定で先頭のみ利用されること(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(string $method, array $args): Stringable|string|int|float|bool|array => 'aabbcc');
+        $stringable = new Stringer('aabbcc');
 
         $instance = new Ltrim();
         $actual = $instance($stringable, 'a', 'b');

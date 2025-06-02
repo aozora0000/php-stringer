@@ -20,10 +20,7 @@ class LowerTest extends TestCase
         $lower = new Lower();
 
         // モックの作成と設定
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'HELLO');
+        $stringable = new Stringer('HELLO');
 
         // テスト実行
         $result = $lower($stringable);
@@ -43,10 +40,7 @@ class LowerTest extends TestCase
         $lower = new Lower();
 
         // モックの作成と設定
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => '');
+        $stringable = new Stringer('');
 
         // テスト実行
         $result = $lower($stringable);

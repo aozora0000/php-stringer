@@ -45,13 +45,14 @@ class HashTest extends TestCase
         if(!defined('PASSWORD_ARGON2I')) {
             $this->markTestSkipped('argon2i is not supported');
         }
+
         // テスト対象のインスタンスを作成
         $instance = new Hash();
         $stringable = new Stringer('password');
-        
+
         // argon2iハッシュを実行
         $actual = $instance($stringable, 'argon2i');
-        
+
         // argon2iハッシュが生成されることを検証
         $this->assertTrue(password_verify('password', $actual->toString()));
     }
@@ -62,13 +63,14 @@ class HashTest extends TestCase
         if(!defined('PASSWORD_ARGON2ID')) {
             $this->markTestSkipped('argon2id is not supported');
         }
+
         // テスト対象のインスタンスを作成
         $instance = new Hash();
         $stringable = new Stringer('password');
-        
+
         // argon2idハッシュを実行
         $actual = $instance($stringable, 'argon2id');
-        
+
         // argon2idハッシュが生成されることを検証
         $this->assertTrue(password_verify('password', $actual->toString()));
     }
@@ -124,7 +126,7 @@ class HashTest extends TestCase
         // テスト対象のインスタンスを作成
         $instance = new Hash();
         $stringable = new Stringer('test');
-        $closure = function($str) { return strtoupper($str); };
+        $closure = fn($str) => strtoupper($str);
         
         // クロージャを使用
         $actual = $instance($stringable, $closure);

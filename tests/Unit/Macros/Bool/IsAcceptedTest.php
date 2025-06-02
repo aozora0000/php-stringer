@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Stringer\Macros\Bool\IsAccepted;
 use Stringer\Stringable;
+use Stringer\Stringer;
 use Tests\Stringer\Unit\TestCase;
 
 class IsAcceptedTest extends TestCase
@@ -30,10 +31,7 @@ class IsAcceptedTest extends TestCase
     public function 同意フレーズが存在する場合Trueを返す(string $word): void
     {
         $instance = new IsAccepted();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => $word);
+        $stringable = new Stringer($word);
         $this->assertTrue($instance($stringable));
     }
 
@@ -56,10 +54,7 @@ class IsAcceptedTest extends TestCase
     public function 同意フレーズが存在しない場合Falseを返す(string $word): void
     {
         $instance = new IsAccepted();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => $word);
+        $stringable = new Stringer($word);
         $this->assertFalse($instance($stringable));
     }
 
@@ -67,10 +62,7 @@ class IsAcceptedTest extends TestCase
     public function 同意フレーズの判定を追加したい場合(): void
     {
         $instance = new IsAccepted();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => '判定');
+        $stringable = new Stringer('判定');
         $this->assertTrue($instance($stringable, '判定'));
     }
 }

@@ -90,7 +90,6 @@ class EscapeTest extends TestCase
         yield 'xml' => ['test', 'xml'];
         yield 'json' => ['test', 'json'];
         yield 'csv' => ['test', 'csv'];
-        yield '空文字列' => ['test', ''];
         yield '存在しないタイプ' => ['test', 'nonexistent'];
     }
 

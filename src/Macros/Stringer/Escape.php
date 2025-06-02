@@ -3,6 +3,7 @@
 namespace Stringer\Macros\Stringer;
 
 use Stringer\Exceptions\InvalidArgumentException;
+use Stringer\Helper;
 use Stringer\Helpers\HtmlEscaper;
 use Stringer\Helpers\SqlEscaper;
 use Stringer\Stringable;
@@ -10,9 +11,11 @@ use Stringer\StringerCallable;
 
 class Escape implements StringerCallable
 {
+    use Helper;
+
     public function __invoke(Stringable $stringable, ...$arguments): Stringable
     {
-        $type = $arguments[0] ?? 'html';
+        $type = self::param($arguments, 0, 'html');
         if(!is_string($type)) {
             throw new InvalidArgumentException("Escape type must be a string");
         }

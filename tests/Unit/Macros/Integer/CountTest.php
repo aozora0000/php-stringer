@@ -15,13 +15,7 @@ class CountTest extends TestCase
     public function 文字列から特定文字列が何回出現するか(): void
     {
         $instance = new Count();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable->method('__call')->willReturnCallback(function(string $name, array $arguments): Stringable|string|int|float|bool {
-            return match($name) {
-                'isEmpty' => false,
-                'toString' => 'abcdee',
-            };
-        });
+        $stringable = new Stringer('abcdee');
         $this->assertSame(1, $instance($stringable, 'a'));
         $this->assertSame(2, $instance($stringable, 'e'));
         $this->assertSame(1, $instance($stringable, 'ee'));
@@ -31,13 +25,7 @@ class CountTest extends TestCase
     public function 文字列が空の場合は0を返却する(): void
     {
         $instance = new Count();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable->method('__call')->willReturnCallback(function(string $name, array $arguments): Stringable|string|int|float|bool {
-            return match($name) {
-                'isEmpty' => true,
-                'toString' => '',
-            };
-        });
+        $stringable = new Stringer('');
         $this->assertSame(0, $instance($stringable, 'a'));
     }
 
@@ -45,13 +33,7 @@ class CountTest extends TestCase
     public function 引数が空の場合は0を返却する(): void
     {
         $instance = new Count();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable->method('__call')->willReturnCallback(function(string $name, array $arguments): Stringable|string|int|float|bool {
-            return match($name) {
-                'isEmpty' => false,
-                'toString' => 'abcdee',
-            };
-        });
+        $stringable = new Stringer('abcdee');
         $this->assertSame(0, $instance($stringable));
     }
 }

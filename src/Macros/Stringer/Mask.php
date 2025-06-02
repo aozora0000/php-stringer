@@ -2,18 +2,20 @@
 
 namespace Stringer\Macros\Stringer;
 
+use Stringer\Helper;
 use Stringer\Stringable;
 use Stringer\Stringer;
 use Stringer\StringerCallable;
 
 class Mask implements StringerCallable
 {
+    use Helper;
 
     public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
-        $character = $arguments[0] ?? '*';
-        $index = $arguments[1] ?? 0;
-        $length = $arguments[2] ?? null;
+        $character = self::param($arguments, 0, '*');
+        $index = self::param($arguments, 1, 0);
+        $length = self::param($arguments, 2, null);
 
         $segment = $stringable->substr($index, $length);
 

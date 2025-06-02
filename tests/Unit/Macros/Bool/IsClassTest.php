@@ -58,9 +58,9 @@ class IsClassTest extends TestCase
     public function 引数が渡されても正常に動作する(): void
     {
         $instance = new IsClass();
-        $stringable = new Stringer('stdClass');
+        $stringable = new Stringer('IsClassTest');
 
-        $actual = $instance($stringable, 'extra', 'arguments');
+        $actual = $instance($stringable, 'Tests\Stringer\Unit\Macros\Bool');
 
         $this->assertTrue($actual);
     }

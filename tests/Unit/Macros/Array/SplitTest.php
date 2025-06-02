@@ -16,8 +16,7 @@ class SplitTest extends TestCase
     #[Test]
     public function デフォルトセパレータで分割できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'a,b,c');
+        $stringable = new Stringer('a,b,c');
         
         $instance = new Split();
         
@@ -38,8 +37,7 @@ class SplitTest extends TestCase
     #[Test]
     public function カスタムセパレータで分割できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'a|b|c');
+        $stringable = new Stringer('a|b|c');
         
         $instance = new Split();
         
@@ -52,8 +50,7 @@ class SplitTest extends TestCase
     public function 正規表現パターンの場合に正規表現分割が使われる(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'a1b2c');;
+        $stringable = new Stringer('a1b2c');;
 
         $instance = new Split();
 
@@ -76,8 +73,7 @@ class SplitTest extends TestCase
     public function 空文字列を分割すると空配列が返される(): void
     {
         // 準備
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => '');
+        $stringable = new Stringer('');
         
         $instance = new Split();
         

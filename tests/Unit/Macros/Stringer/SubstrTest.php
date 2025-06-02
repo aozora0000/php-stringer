@@ -20,9 +20,7 @@ class SubstrTest extends TestCase
         $substr = new Substr();
         
         // モックを作成
-        $stringableMock = $this->createMock(Stringable::class);
-        $stringableMock->method('__toString')
-            ->willReturn('テスト文字列');
+        $stringableMock = new Stringer('テスト文字列');
             
         $actual = $substr($stringableMock);
         
@@ -37,9 +35,7 @@ class SubstrTest extends TestCase
     {
         $substr = new Substr();
         
-        $stringableMock = $this->createMock(Stringable::class);
-        $stringableMock->method('__toString')
-            ->willReturn('テスト文字列');
+        $stringableMock = new Stringer('テスト文字列');
             
         $actual = $substr($stringableMock, 2);
         
@@ -54,9 +50,7 @@ class SubstrTest extends TestCase
     {
         $substr = new Substr();
         
-        $stringableMock = $this->createMock(Stringable::class);
-        $stringableMock->method('__toString')
-            ->willReturn('テスト文字列');
+        $stringableMock = new Stringer('テスト文字列');
             
         $actual = $substr($stringableMock, '1', '2');
         
@@ -71,9 +65,7 @@ class SubstrTest extends TestCase
     {
         $substr = new Substr();
         
-        $stringableMock = $this->createMock(Stringable::class);
-        $stringableMock->method('__toString')
-            ->willReturn('テスト文字列');
+        $stringableMock = new Stringer('テスト文字列');
             
         $actual = $substr($stringableMock, '-3');
         

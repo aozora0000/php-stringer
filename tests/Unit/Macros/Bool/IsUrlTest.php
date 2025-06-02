@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Bool\IsUrl;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 class IsUrlTest extends TestCase
 {
@@ -15,8 +16,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function httpスキームのURLを判定できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'http://example.com');
+        $stringable = new Stringer('http://example.com');
 
         $isUrl = new IsUrl();
         $this->assertTrue($isUrl($stringable));
@@ -28,8 +28,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function httpsスキームのURLを判定できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'https://example.com/path/hoge?param=piyo#frag1');
+        $stringable = new Stringer('https://example.com/path/hoge?param=piyo#frag1');
 
         $isUrl = new IsUrl();
         $this->assertTrue($isUrl($stringable));
@@ -41,8 +40,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function ftpスキームのURLを判定できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'ftp://example.com/');
+        $stringable = new Stringer('ftp://example.com/');
 
         $isUrl = new IsUrl();
         $this->assertTrue($isUrl($stringable, 'ftp'));
@@ -54,8 +52,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function sftpスキームのURLを判定できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'sftp://example.com/');
+        $stringable = new Stringer('sftp://example.com/');
 
         $isUrl = new IsUrl();
         $this->assertTrue($isUrl($stringable, 'sftp'));
@@ -67,8 +64,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function 不正なURLは認識されない(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'http://');
+        $stringable = new Stringer('http://');
 
         $isUrl = new IsUrl();
         $this->assertFalse($isUrl($stringable));
@@ -80,8 +76,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function IPアドレスのURLを判定できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'https://127.0.0.1/hoge');
+        $stringable = new Stringer('https://127.0.0.1/hoge');
 
         $isUrl = new IsUrl();
         $this->assertTrue($isUrl($stringable));
@@ -93,8 +88,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function ユーザー情報付きURLを判定できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'https://user:pass@example.com/path');
+        $stringable = new Stringer('https://user:pass@example.com/path');
 
         $isUrl = new IsUrl();
         $this->assertTrue($isUrl($stringable));
@@ -106,8 +100,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function ポート番号付きURLを判定できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'https://example.com:8080/');
+        $stringable = new Stringer('https://example.com:8080/');
 
         $isUrl = new IsUrl();
         $this->assertTrue($isUrl($stringable));
@@ -119,8 +112,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function IPv6アドレスのURLを判定できる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'http://[2001:db8::1]/index.html');
+        $stringable = new Stringer('http://[2001:db8::1]/index.html');
 
         $isUrl = new IsUrl();
         $this->assertTrue($isUrl($stringable));
@@ -132,8 +124,7 @@ class IsUrlTest extends TestCase
     #[Test]
     public function ドメイン名無しは認識されない(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'http:///hoge');
+        $stringable = new Stringer('http:///hoge');
 
         $isUrl = new IsUrl();
         $this->assertFalse($isUrl($stringable));

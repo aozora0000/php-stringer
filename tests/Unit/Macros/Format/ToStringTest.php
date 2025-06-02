@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Stringer\Stringable;
 use Stringer\Macros\Format\ToString;
+use Stringer\Stringer;
 
 class ToStringTest extends TestCase
 {
@@ -16,9 +17,7 @@ class ToStringTest extends TestCase
     public function 文字列への変換が成功する(): void
     {
         $instance = new ToString();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__toString')
-            ->willReturnCallback(fn (): string => 'テスト文字列');
+        $stringable = new Stringer('テスト文字列');
 
         $this->assertSame('テスト文字列', $instance($stringable));
     }

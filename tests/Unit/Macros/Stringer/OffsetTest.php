@@ -15,16 +15,7 @@ class OffsetTest extends TestCase
     public function 空文字または文字数以上のオフセットの場合は空が返ってくる(): void
     {
         $instance = new Offset();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'isEmpty' => true,
-                    'length' => 0,
-                    'toString' => '',
-                };
-            });
+        $stringable = new Stringer('');
         $this->assertSame('', $instance($stringable)->toString());
     }
 
@@ -32,16 +23,7 @@ class OffsetTest extends TestCase
     public function 指定文字数オフセット指定文字数までの文字列が返却される(): void
     {
         $instance = new Offset();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'isEmpty' => false,
-                    'length' => 5,
-                    'toString' => 'abcde',
-                };
-            });
+        $stringable = new Stringer('abcde');
         $this->assertSame('cde', $instance($stringable, 2)->toString());
         $this->assertSame('c', $instance($stringable, 2, 1)->toString());
     }
@@ -50,16 +32,7 @@ class OffsetTest extends TestCase
     public function 負数のオフセットの場合は後ろから返却される(): void
     {
         $instance = new Offset();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'isEmpty' => false,
-                    'length' => 5,
-                    'toString' => 'abcde',
-                };
-            });
+        $stringable = new Stringer('abcde');
         $this->assertSame('e', $instance($stringable, -1)->toString());
         $this->assertSame('bc', $instance($stringable, -4, 2)->toString());
     }

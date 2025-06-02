@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Bool\IsRegexPattern;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 class IsRegexPatternTest extends TestCase
 {
@@ -13,8 +14,7 @@ class IsRegexPatternTest extends TestCase
     #[Test]
     public function 正規表現の場合は真を返す(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => '/abc/');
+        $stringable = new Stringer('/abc/');
 
         $instance = new IsRegexPattern();
         $this->assertTrue($instance($stringable));
@@ -24,8 +24,7 @@ class IsRegexPatternTest extends TestCase
     #[Test]
     public function デリミタが不正な場合は偽を返す(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => '/abc[');
+        $stringable = new Stringer('/abc[');
 
         $instance = new IsRegexPattern();
         $this->assertFalse($instance($stringable));
@@ -35,8 +34,7 @@ class IsRegexPatternTest extends TestCase
     #[Test]
     public function デリミタが1文字未満の場合は偽を返す(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'ab');
+        $stringable = new Stringer('ab');
 
         $instance = new IsRegexPattern();
         $this->assertFalse($instance($stringable));
@@ -46,8 +44,7 @@ class IsRegexPatternTest extends TestCase
     #[Test]
     public function 修飾子付き正規表現は真を返す(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => '/abc/i');
+        $stringable = new Stringer('/abc/i');
 
         $instance = new IsRegexPattern();
         $this->assertTrue($instance($stringable));

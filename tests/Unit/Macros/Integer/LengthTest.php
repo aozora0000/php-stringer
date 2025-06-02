@@ -15,15 +15,7 @@ class LengthTest extends TestCase
     public function オフセットなしで文字数をカウントする(): void
     {
         $instance = new Length();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'isEmpty' => false,
-                    'toString' => 'test',
-                };
-            });
+        $stringable = new Stringer('test');
         $this->assertSame(4, $instance($stringable));
     }
 
@@ -31,15 +23,7 @@ class LengthTest extends TestCase
     public function 空文字の場合は0を返す(): void
     {
         $instance = new Length();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'isEmpty' => true,
-                    'toString' => '',
-                };
-            });
+        $stringable = new Stringer('');
         $this->assertSame(0, $instance($stringable));
     }
 
@@ -47,15 +31,7 @@ class LengthTest extends TestCase
     public function オフセットありで文字数をカウントする(): void
     {
         $instance = new Length();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'isEmpty' => false,
-                    'toString' => 'test',
-                };
-            });
+        $stringable = new Stringer('test');
         $this->assertSame(2, $instance($stringable, 2));
     }
 
@@ -63,15 +39,7 @@ class LengthTest extends TestCase
     public function 元の文字数よりオフセットが多い場合0を返す(): void
     {
         $instance = new Length();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'isEmpty' => false,
-                    'toString' => 'test',
-                };
-            });
+        $stringable = new Stringer('test');
         $this->assertSame(0, $instance($stringable, 5));
     }
 }

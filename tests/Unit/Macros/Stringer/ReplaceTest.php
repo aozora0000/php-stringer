@@ -15,10 +15,7 @@ class ReplaceTest extends TestCase
     public function 一部文字列をデフォルト動作で空に入れ替える(): void
     {
         $instance = new Replace();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'test');
+        $stringable = new Stringer('test');
         $this->assertSame('es', $instance($stringable, 't')->toString());
     }
 
@@ -26,10 +23,7 @@ class ReplaceTest extends TestCase
     public function 一部文字列を入れ替える(): void
     {
         $instance = new Replace();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn (): Stringable|string|int|float|bool|array => 'test');
+        $stringable = new Stringer('test');
         $this->assertSame('aesa', $instance($stringable, 't', 'a')->toString());
     }
 

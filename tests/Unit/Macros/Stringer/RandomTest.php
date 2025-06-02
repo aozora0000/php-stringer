@@ -19,7 +19,7 @@ class RandomTest extends TestCase
         $actual = $instance($stringable);
         $expected = 10;
 
-        $this->assertEquals($expected, strlen($actual->toString()));
+        $this->assertSame($expected, strlen($actual->toString()));
     }
 
     #[Test]
@@ -31,7 +31,7 @@ class RandomTest extends TestCase
         $actual = $instance($stringable, '5');
         $expected = 5;
 
-        $this->assertEquals($expected, strlen($actual->toString()));
+        $this->assertSame($expected, strlen($actual->toString()));
     }
 
     #[Test]

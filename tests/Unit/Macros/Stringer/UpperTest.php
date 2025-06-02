@@ -20,12 +20,10 @@ class UpperTest extends TestCase
         $upper = new Upper();
 
         // Stringableモックを作成
-        $stringableMock = $this->createMock(Stringable::class);
-        $stringableMock->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'hello');
+        $stringable = new Stringer('hello');
 
         // テスト実行
-        $result = $upper($stringableMock);
+        $result = $upper($stringable);
 
         // 検証
         $this->assertEquals(new Stringer('HELLO'), $result);
@@ -41,12 +39,10 @@ class UpperTest extends TestCase
         $upper = new Upper();
 
         // Stringableモックを作成
-        $stringableMock = $this->createMock(Stringable::class);
-        $stringableMock->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'こんにちはworld');
+        $stringable = new Stringer('こんにちはworld');
 
         // テスト実行
-        $result = $upper($stringableMock);
+        $result = $upper($stringable);
 
         // 検証
         $this->assertEquals(new Stringer('こんにちはWORLD'), $result);
@@ -62,12 +58,10 @@ class UpperTest extends TestCase
         $upper = new Upper();
 
         // Stringableモックを作成
-        $stringableMock = $this->createMock(Stringable::class);
-        $stringableMock->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'HELLO');
+        $stringable = new Stringer('HELLO');
 
         // テスト実行
-        $result = $upper($stringableMock);
+        $result = $upper($stringable);
 
         // 検証
         $this->assertEquals(new Stringer('HELLO'), $result);

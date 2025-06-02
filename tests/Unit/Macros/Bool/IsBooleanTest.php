@@ -14,10 +14,7 @@ class IsBooleanTest extends TestCase
     public function Trueの場合はTrueが返る(): void
     {
         $instance = new IsBoolean();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => 'true');
+        $stringable = new Stringer('true');
         $this->assertTrue($instance($stringable));
     }
 
@@ -25,10 +22,7 @@ class IsBooleanTest extends TestCase
     public function （1）の場合はTrueが返る(): void
     {
         $instance = new IsBoolean();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => '1');
+        $stringable = new Stringer('1');
         $this->assertTrue($instance($stringable));
     }
 
@@ -36,10 +30,7 @@ class IsBooleanTest extends TestCase
     public function Falseの場合はTrueが返る(): void
     {
         $instance = new IsBoolean();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => 'false');
+        $stringable = new Stringer('false');
         $this->assertTrue($instance($stringable));
     }
 
@@ -47,10 +38,7 @@ class IsBooleanTest extends TestCase
     public function （0）の場合はTrueが返る(): void
     {
         $instance = new IsBoolean();
-        $stringable = $this->createMock(Stringer::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool => '0');
+        $stringable = new Stringer('0');
         $this->assertTrue($instance($stringable));
     }
 }

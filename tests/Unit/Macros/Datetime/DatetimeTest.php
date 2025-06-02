@@ -16,10 +16,7 @@ class DatetimeTest extends TestCase
     public function 日時文字列からパース・フォーマットする(): void
     {
         $instance = new Datetime();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '2021-01-01 12:00:00');
+        $stringable = new Stringer('2021-01-01 12:00:00');
         $this->assertSame('2021-01-01', $instance($stringable, 'Y-m-d', 'Asia/Tokyo')->toString());
     }
 
@@ -29,10 +26,7 @@ class DatetimeTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $instance = new Datetime();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => 'abcde');
+        $stringable = new Stringer('abcde');
 
         $instance($stringable, 'Y-m-d');
     }
@@ -41,10 +35,7 @@ class DatetimeTest extends TestCase
     public function UTCタイムゾーンで日時文字列からパース・フォーマットする(): void
     {
         $instance = new Datetime();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '2021-01-01 12:00:00');
+        $stringable = new Stringer('2021-01-01 12:00:00');
         $this->assertSame('2021-01-01 12:00:00', $instance($stringable, 'Y-m-d H:i:s', 'UTC')->toString());
     }
 
@@ -52,10 +43,7 @@ class DatetimeTest extends TestCase
     public function 異なるタイムゾーン間で日時文字列をパース・フォーマットする(): void
     {
         $instance = new Datetime();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(fn(string $name, array $arguments): Stringable|string|int|float|bool|array => '2021-01-01 12:00:00');
+        $stringable = new Stringer('2021-01-01 12:00:00');
         $this->assertSame('2021-01-01 04:00:00', $instance($stringable, 'Y-m-d H:i:s', 'America/Los_Angeles')->toString());
     }
 

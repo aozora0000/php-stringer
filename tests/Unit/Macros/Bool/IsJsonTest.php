@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Bool\IsJson;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 /**
  * IsJsonクラスの単体テスト
@@ -18,8 +19,7 @@ class IsJsonTest extends TestCase
     #[Test]
     public function 正常なjson文字列の場合_trueが返ること(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn (): Stringable|string|int|float|bool|array => '{"a":1}');
+        $stringable = new Stringer('{"a":1}');
 
         $instance = new IsJson();
         $this->assertTrue($instance($stringable));
@@ -31,8 +31,7 @@ class IsJsonTest extends TestCase
     #[Test]
     public function 不正なjson文字列の場合_falseが返ること(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => '{"a":1');
+        $stringable = new Stringer('{"a":1');
 
         $instance = new IsJson();
         $this->assertFalse($instance($stringable));

@@ -7,6 +7,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Stringer\Stringable;
 use Stringer\Macros\Format\ToDouble;
 use InvalidArgumentException;
+use Stringer\Stringer;
 
 class ToDoubleTest extends TestCase
 {
@@ -18,14 +19,7 @@ class ToDoubleTest extends TestCase
     {
         $instance = new ToDouble();
         
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(function(string $method, array $args): Stringable|string|int|float|bool|array {
-                return match($method) {
-                    'isNumeric' => true,
-                    'toString' => '123.456',
-                };
-            });
+        $stringable = new Stringer('123.456');
         $this->assertEqualsWithDelta(123.46, $instance($stringable, 2), PHP_FLOAT_EPSILON);
     }
 
@@ -37,14 +31,7 @@ class ToDoubleTest extends TestCase
     {
         $instance = new ToDouble();
         
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(function(string $method, array $args): Stringable|string|int|float|bool|array {
-                return match($method) {
-                    'isNumeric' => true,
-                    'toString' => '123.456',
-                };
-            });
+        $stringable = new Stringer('123.456');
         $this->assertEqualsWithDelta(123.456, $instance($stringable), PHP_FLOAT_EPSILON);
     }
 
@@ -56,14 +43,7 @@ class ToDoubleTest extends TestCase
     {
         $toDouble = new ToDouble();
         
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(function(string $method, array $args): Stringable|string|int|float|bool|array {
-                return match($method) {
-                    'isNumeric' => false,
-                    'toString' => 'not-a-number',
-                };
-            });
+        $stringable = new Stringer('not-a-number');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot convert to double');

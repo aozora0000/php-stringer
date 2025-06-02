@@ -2,17 +2,19 @@
 
 namespace Stringer\Macros\Stringer;
 
+use Stringer\Helper;
 use Stringer\Stringable;
 use Stringer\Stringer;
 use Stringer\StringerCallable;
 
 class Limit implements StringerCallable
 {
+    use Helper;
 
     public function __invoke(Stringable $stringable, string ...$arguments): Stringable
     {
-        $limit = $arguments[0] ?? 100;
-        $end = $arguments[1] ?? '...';
+        $limit = self::param($arguments, 0, 100);
+        $end = self::param($arguments, 1, '...');
         if(mb_strwidth($stringable->toString()) <= $limit) {
             return $stringable;
         }

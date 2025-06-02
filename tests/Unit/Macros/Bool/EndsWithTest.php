@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Bool\EndsWith;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 /**
  * EndsWith クラスのユニットテスト
@@ -18,8 +19,7 @@ class EndsWithTest extends TestCase
     #[Test]
     public function 空文字列の場合はfalseになる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => '');
+        $stringable = new Stringer('');
         $instance = new EndsWith();
         $actual = $instance($stringable, 'abc');
         $this->assertFalse($actual);
@@ -31,8 +31,7 @@ class EndsWithTest extends TestCase
     #[Test]
     public function 終了文字列引数が空の場合はfalseになる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'abc');
+        $stringable = new Stringer('abc');
         $instance = new EndsWith();
         $actual = $instance($stringable);
         $this->assertFalse($actual);
@@ -44,8 +43,7 @@ class EndsWithTest extends TestCase
     #[Test]
     public function １つの終了文字に一致すればtrueになる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foobar');
+        $stringable = new Stringer('foobar');
         $instance = new EndsWith();
         $actual = $instance($stringable, 'bar');
         $this->assertTrue($actual);
@@ -57,8 +55,7 @@ class EndsWithTest extends TestCase
     #[Test]
     public function １つの終了文字に一致しなければfalseになる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foobar');
+        $stringable = new Stringer('foobar');
         $instance = new EndsWith();
         $actual = $instance($stringable, 'baz');
         $this->assertFalse($actual);
@@ -70,8 +67,7 @@ class EndsWithTest extends TestCase
     #[Test]
     public function 複数の終了文字のいずれかに一致すればtrueになる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foobar');
+        $stringable = new Stringer('foobar');
         $instance = new EndsWith();
 
         $actual = $instance($stringable, 'baz', 'bar', 'hoge');
@@ -84,8 +80,7 @@ class EndsWithTest extends TestCase
     #[Test]
     public function 複数の終了文字にどれも一致しなければfalseになる(): void
     {
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'foobar');
+        $stringable = new Stringer('foobar');
         $instance = new EndsWith();
 
         $actual = $instance($stringable, 'abc', 'xyz', 'hoge');

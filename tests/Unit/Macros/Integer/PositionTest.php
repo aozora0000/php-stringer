@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Stringer\Macros\Integer\Position;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 class PositionTest extends TestCase
 {
@@ -19,9 +20,7 @@ class PositionTest extends TestCase
         $position = new Position();
         
         // Stringableインターフェースのモックを作成
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'テスト文字列');
+        $stringable = new Stringer('テスト文字列');
 
         $actual = $position($stringable, '文字');
         $this->assertSame(3, $actual);
@@ -35,9 +34,7 @@ class PositionTest extends TestCase
     {
         $position = new Position();
         
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'あいうえおあいうえお');
+        $stringable = new Stringer('あいうえおあいうえお');
 
         $actual = $position($stringable, 'あ', 3);
         $this->assertSame(5, $actual);
@@ -51,9 +48,7 @@ class PositionTest extends TestCase
     {
         $position = new Position();
         
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'テスト文字列');
+        $stringable = new Stringer('テスト文字列');
 
         $actual = $position($stringable, 'xyz');
         $this->assertFalse($actual);
@@ -67,9 +62,7 @@ class PositionTest extends TestCase
     {
         $position = new Position();
         
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(fn(): Stringable|string|int|float|bool|array => 'テスト');
+        $stringable = new Stringer('テスト');
 
         $actual = $position($stringable);
         $this->assertSame(0, $actual);

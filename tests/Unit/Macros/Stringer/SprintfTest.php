@@ -15,14 +15,7 @@ class SprintfTest extends TestCase
     public function Sprintfマクロを通してフォーマット出来る(): void
     {
         $instance = new Sprintf();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'toString' => 'World',
-                };
-            });
+        $stringable = new Stringer('World');
         $this->assertSame('Hello World', $instance($stringable, 'Hello %s')->toString());
     }
 
@@ -30,14 +23,7 @@ class SprintfTest extends TestCase
     public function Sprintfマクロを通して複数置換でフォーマット出来る(): void
     {
         $instance = new Sprintf();
-        $stringable = $this->createMock(Stringable::class);
-        $stringable
-            ->method('__call')
-            ->willReturnCallback(function (string $name, array $arguments): Stringable|string|int|float|bool|array {
-                return match($name) {
-                    'toString' => 'World',
-                };
-            });
+        $stringable = new Stringer('World');
         $this->assertSame('Hello World Test', $instance($stringable, 'Hello %s %s', 'Test')->toString());
     }
 }

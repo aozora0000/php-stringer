@@ -7,6 +7,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Stringer\Macros\Format\ToHex;
 use Stringer\Stringable;
 use InvalidArgumentException;
+use Stringer\Stringer;
 
 class ToHexTest extends TestCase
 {
@@ -20,15 +21,7 @@ class ToHexTest extends TestCase
         $instance = new ToHex();
         
         // Stringableのモックを作成
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(function (string $method, array $args): Stringable|string|int|float|bool|array {
-                return match ($method) {
-                    'isInteger' => true,
-                    'toString' => '255',
-                    default => null,
-                };
-            });
+        $stringable = new Stringer('255');
 
         // 実行と検証
         $this->assertSame('ff', $instance($stringable));
@@ -44,15 +37,7 @@ class ToHexTest extends TestCase
         $instance = new ToHex();
         
         // Stringableのモックを作成
-        $stringable = $this->createMock(Stringable::class);
-        $stringable->method('__call')
-            ->willReturnCallback(function (string $method, array $args): Stringable|string|int|float|bool|array {
-                return match ($method) {
-                    'isInteger' => false,
-                    default => null,
-                };
-            });
-
+        $stringable = new Stringer('aaaa');
         // 例外の検証
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot convert to hex');

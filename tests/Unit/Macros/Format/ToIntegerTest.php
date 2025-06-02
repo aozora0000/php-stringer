@@ -7,6 +7,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Stringer\Macros\Format\ToInteger;
 use Stringer\Stringable;
+use Stringer\Stringer;
 
 class ToIntegerTest extends TestCase
 {
@@ -20,17 +21,7 @@ class ToIntegerTest extends TestCase
         $instance = new ToInteger();
         
         // Stringableのモックを作成
-        $stringable = $this->createMock(Stringable::class);
-        
-        // __callメソッドを使用してメソッドコールをモック化
-        $stringable->method('__call')
-            ->willReturnCallback(function (string $method, array $arguments): Stringable|string|int|float|bool|array {
-                return match ($method) {
-                    'isInteger' => true,
-                    'toString' => "123",
-                    default => null,
-                };
-            });
+        $stringable = new Stringer("123");
             
         // 検証
         $this->assertSame(123, $instance($stringable));
@@ -46,17 +37,7 @@ class ToIntegerTest extends TestCase
         $instance = new ToInteger();
         
         // Stringableのモックを作成
-        $stringable = $this->createMock(Stringable::class);
-        
-        // __callメソッドを使用してメソッドコールをモック化
-        $stringable->method('__call')
-            ->willReturnCallback(function (string $method, array $arguments): Stringable|string|int|float|bool|array {
-                return match ($method) {
-                    'isInteger' => false,
-                    'toString' => "aaa",
-                    default => null,
-                };
-            });
+        $stringable = new Stringer("aaa");
 
         // 例外が発生することを期待
         $this->expectException(InvalidArgumentException::class);

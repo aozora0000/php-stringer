@@ -54,6 +54,12 @@ trait Helper
             $byteNo = ord($byte);
             $hex .= sprintf('%02X', $byteNo) . ' ';
         }
+
         return trim($hex);
+    }
+
+    protected static function param(array $array, int $index, mixed $default = null): mixed
+    {
+        return isset($array[$index]) && $array[$index] !== '' ? $array[$index] : $default;
     }
 }
